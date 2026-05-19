@@ -1,0 +1,121 @@
+---
+// 설치 사례 카테고리 sticky 서브탭
+type Category = '박물관' | '도서관' | '교육기관' | '공공기관' | '창고·물류';
+interface Props {
+  active: Category;
+}
+const { active } = Astro.props;
+
+// 카테고리별 URL 매핑 (영문 슬러그)
+const slugMap: Record<Category, string> = {
+  '박물관': 'museum',
+  '도서관': 'library',
+  '교육기관': 'education',
+  '공공기관': 'public',
+  '창고·물류': 'warehouse',
+};
+
+const categories: { name: Category; svg: string }[] = [
+  {
+    name: '박물관',
+    svg: `<path d="M3 9l9-5 9 5"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="6" y1="10" x2="6" y2="18"/><line x1="10" y1="10" x2="10" y2="18"/><line x1="14" y1="10" x2="14" y2="18"/><line x1="18" y1="10" x2="18" y2="18"/><line x1="3" y1="18" x2="21" y2="18"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>`
+  },
+  {
+    name: '도서관',
+    svg: `<rect x="3" y="4" width="3.2" height="16" rx="0.4"/><rect x="7.4" y="6" width="3.2" height="14" rx="0.4"/><rect x="11.8" y="3" width="3.2" height="17" rx="0.4"/><path d="M17 6.2l3.6 0.9-3 13.4-3.6-0.9z"/>`
+  },
+  {
+    name: '교육기관',
+    svg: `<path d="M2 9.5l10-4.5 10 4.5-10 4.5z"/><path d="M6 11.3v5.2c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5.2"/><line x1="22" y1="9.5" x2="22" y2="15"/><circle cx="22" cy="16" r="0.6" fill="currentColor" stroke="none"/>`
+  },
+  {
+    name: '공공기관',
+    svg: `<line x1="12" y1="2" x2="12" y2="8"/><path d="M12 2.6l3.2 1.1-3.2 1.1"/><rect x="4.5" y="8" width="15" height="11.5" rx="0.4"/><rect x="10" y="14" width="4" height="5.5"/><line x1="7" y1="11.5" x2="9" y2="11.5"/><line x1="15" y1="11.5" x2="17" y2="11.5"/><line x1="3" y1="20.5" x2="21" y2="20.5"/>`
+  },
+  {
+    name: '창고·물류',
+    svg: `<path d="M3 10.5L12 5l9 5.5V20H3z"/><line x1="3" y1="13.5" x2="21" y2="13.5"/><line x1="3" y1="16.5" x2="21" y2="16.5"/><line x1="3" y1="20" x2="21" y2="20"/><line x1="12" y1="13.5" x2="12" y2="20"/>`
+  },
+];
+---
+
+<div class="cat-tabs-wrap">
+  <nav class="cat-tabs" aria-label="설치 사례 카테고리">
+    {categories.map(cat => (
+      <a
+        class:list={['cat-tab', cat.name === active && 'active']}
+        href={`/cases/${slugMap[cat.name]}`}
+        aria-current={cat.name === active ? 'page' : undefined}
+      >
+        <span class="cat-tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+               stroke-linecap="round" stroke-linejoin="round" set:html={cat.svg} />
+        </span>
+        <span class="cat-tab-name">{cat.name}</span>
+      </a>
+    ))}
+  </nav>
+</div>
+
+<style>
+.cat-tabs-wrap {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 90;
+  background: rgba(21,26,20,0.95);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.cat-tabs {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  max-width: 1400px; margin: 0 auto;
+}
+.cat-tab {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; padding: 22px 16px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.55);
+  border-right: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s, color 0.2s;
+  position: relative; cursor: pointer;
+}
+.cat-tab:last-child { border-right: none; }
+.cat-tab::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--c-teal2);
+  transform: scaleX(0);
+  transition: transform 0.3s var(--ease);
+}
+.cat-tab:hover { color: var(--c-white); background: rgba(37,196,174,0.05); }
+.cat-tab:hover .cat-tab-icon { color: var(--c-teal2); }
+.cat-tab.active { color: var(--c-white); background: rgba(37,196,174,0.08); }
+.cat-tab.active::after { transform: scaleX(1); }
+.cat-tab.active .cat-tab-icon { color: var(--c-teal2); }
+.cat-tab-icon {
+  width: 28px; height: 28px; flex-shrink: 0;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.2s;
+}
+.cat-tab-icon svg { width: 100%; height: 100%; display: block; }
+.cat-tab-name {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: 15px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+@media (max-width: 1100px) {
+  .cat-tab-name { font-size: 13px; }
+}
+
+@media (max-width: 768px) {
+  .cat-tabs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cat-tabs {
+    grid-template-columns: repeat(5, minmax(120px, 1fr));
+    min-width: 600px;
+  }
+  .cat-tab { padding: 16px 12px; gap: 8px; }
+  .cat-tab-icon { width: 22px; height: 22px; }
+  .cat-tab-name { font-size: 12px; }
+}
+</style>

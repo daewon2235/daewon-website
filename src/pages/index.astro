@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="(주)대원모빌랙 — 공간에 가치를 더하는 기업">
+  <section class="placeholder-hero">
+    <div class="placeholder-inner">
+      <span class="placeholder-tag">Coming Soon</span>
+      <h1 class="placeholder-title">
+        메인 페이지는<br>
+        <em>다음 작업</em>에서 이식됩니다
+      </h1>
+      <p class="placeholder-text">
+        지금은 박물관 사례 페이지부터 동작 확인 중이에요.<br>
+        먼저 <a href="/cases/museum">박물관 설치 사례 페이지</a>를 확인해보세요.
+      </p>
+      <div class="placeholder-links">
+        <a href="/cases/museum" class="placeholder-btn primary">📚 박물관 사례 보기</a>
+        <a href="/cases/library" class="placeholder-btn ghost">도서관 (빈 상태)</a>
+        <a href="/cases/education" class="placeholder-btn ghost">교육기관 (빈 상태)</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.placeholder-hero {
+  min-height: 100vh;
+  background: var(--c-dark);
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--nav-h) 24px 24px;
+  position: relative; overflow: hidden;
+}
+.placeholder-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.placeholder-inner {
+  position: relative; z-index: 2;
+  max-width: 720px; text-align: center;
+}
+.placeholder-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; letter-spacing: 0.2em;
+  color: var(--c-teal2); text-transform: uppercase;
+  display: inline-block; margin-bottom: 24px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-teal2);
+}
+.placeholder-title {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 800;
+  color: var(--c-white);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+.placeholder-title em {
+  color: var(--c-teal2); font-style: normal;
+}
+.placeholder-text {
+  font-size: 16px; line-height: 1.8;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 40px;
+}
+.placeholder-text a { color: var(--c-teal2); text-decoration: underline; }
+.placeholder-links {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.placeholder-btn {
+  padding: 12px 24px;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.placeholder-btn.primary {
+  background: var(--c-teal2); color: var(--c-dark);
+}
+.placeholder-btn.primary:hover { background: var(--c-lime); }
+.placeholder-btn.ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.placeholder-btn.ghost:hover { border-color: var(--c-teal2); color: var(--c-teal2); }
+</style>

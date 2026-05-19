@@ -1,0 +1,370 @@
+---
+// 단일 사례 블록 (사례 1건을 렌더링)
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'cases'>;
+  caseNum: number;  // 카테고리 안에서의 표시 번호
+}
+const { entry, caseNum } = Astro.props;
+const { data } = entry;
+const { Content } = await entry.render();
+---
+
+<article class="case" id={entry.slug}>
+  <header class="case-head reveal">
+    <div class="case-head-left">
+      <div class="case-num">Case {String(caseNum).padStart(2, '0')} · {data.year}</div>
+      <h2 class="case-name">{data.title}</h2>
+    </div>
+    <p class="case-tagline">{data.subtitle}</p>
+  </header>
+
+  <!-- Hero 이미지 -->
+  <div class="case-hero-img reveal">
+    <img src={data.hero_image} alt={data.hero_image_alt || data.title} loading="lazy" />
+  </div>
+
+  <!-- Meta 4컬럼 -->
+  <div class="case-meta reveal">
+    <div class="case-meta-item">
+      <div class="case-meta-label">Client</div>
+      <div class="case-meta-value">{data.client}</div>
+    </div>
+    <div class="case-meta-item">
+      <div class="case-meta-label">Location</div>
+      <div class="case-meta-value">{data.location}</div>
+    </div>
+    <div class="case-meta-item">
+      <div class="case-meta-label">Year</div>
+      <div class="case-meta-value">{data.year}</div>
+    </div>
+    <div class="case-meta-item">
+      <div class="case-meta-label">Scope</div>
+      <div class="case-meta-value" set:html={data.scope_summary.replace(/\//g, '<br/>')} />
+    </div>
+  </div>
+
+  <!-- Overview (마크다운 본문) + Spec card -->
+  <div class="case-overview reveal">
+    <div class="case-overview-body">
+      <Content />
+      {data.quote && (
+        <div class="case-overview-quote">
+          <p>"{data.quote}"</p>
+        </div>
+      )}
+    </div>
+
+    {data.specs.length > 0 && (
+      <aside class="spec-card">
+        <div class="spec-card-title">Project Specifications</div>
+        <ul class="spec-list">
+          {data.specs.map(s => (
+            <li class="spec-row">
+              <span class="spec-key">{s.key}</span>
+              <span class="spec-val" set:html={s.value.replace(/\//g, '<br/>')} />
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </div>
+
+  <!-- Key Features -->
+  {data.features.length > 0 && (
+    <div class="case-features reveal">
+      {data.features.map((f, i) => (
+        <div class="feature-card">
+          <div class="feature-num">{String(i + 1).padStart(2, '0')}</div>
+          <h3 class="feature-title">{f.title}</h3>
+          <p class="feature-desc">{f.description}</p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Gallery -->
+  {data.gallery.length > 0 && (
+    <div class="case-gallery reveal">
+      {data.gallery.map((g, i) => (
+        <div class:list={['gallery-item', i === 0 && 'tall']}>
+          <img src={g.image} alt={g.caption} loading="lazy" />
+          <div class="gallery-caption">
+            <div class="gallery-caption-label">{String(i + 1).padStart(2, '0')} — {g.label}</div>
+            <div class="gallery-caption-text">{g.caption}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Scope of Work -->
+  {data.scope_items.length > 0 && (
+    <div class="case-scope reveal">
+      <div class="case-scope-title">Scope of Work — 납품 범위</div>
+      <div class="scope-grid">
+        {data.scope_items.map(s => (
+          <div class="scope-item">
+            <div class="scope-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <div class="scope-content">
+              <div class="scope-title">{s.title}</div>
+              <div class="scope-desc">{s.description}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</article>
+
+<style>
+.case {
+  margin-bottom: 100px;
+  scroll-margin-top: calc(var(--nav-h) + var(--tabs-h) + 20px);
+}
+.case:last-child { margin-bottom: 0; }
+
+.case-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 32px; margin-bottom: 32px; flex-wrap: wrap;
+}
+.case-head-left { flex: 1; min-width: 280px; }
+.case-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--c-teal);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.case-num::before {
+  content: ''; width: 32px; height: 1px; background: var(--c-teal);
+}
+.case-name {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 800; line-height: 1.1;
+  color: var(--c-dark); letter-spacing: -0.01em;
+}
+.case-tagline {
+  font-size: 14px; line-height: 1.7;
+  color: var(--c-muted);
+  max-width: 380px; text-align: right;
+}
+
+.case-hero-img {
+  width: 100%; aspect-ratio: 16 / 9;
+  overflow: hidden; background: var(--c-dark);
+  margin-bottom: 56px;
+}
+.case-hero-img img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+}
+
+.case-meta {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--c-white);
+  border: 1px solid var(--c-warm);
+  margin-bottom: 56px;
+}
+.case-meta-item {
+  padding: 24px 28px;
+  border-right: 1px solid var(--c-warm);
+}
+.case-meta-item:last-child { border-right: none; }
+.case-meta-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--c-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.case-meta-value {
+  font-size: 14px; color: var(--c-text);
+  line-height: 1.5; font-weight: 600;
+}
+
+.case-overview {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 64px; align-items: start;
+  margin-bottom: 56px;
+}
+.case-overview-body :global(p) {
+  font-size: 15px; line-height: 1.9; color: var(--c-muted);
+  margin-bottom: 20px;
+}
+.case-overview-body :global(p strong) { color: var(--c-text); font-weight: 700; }
+.case-overview-quote {
+  border-left: 3px solid var(--c-teal2);
+  padding: 16px 22px;
+  background: var(--c-white);
+  margin-top: 24px;
+}
+.case-overview-quote p {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: 19px; font-weight: 600; line-height: 1.4;
+  color: var(--c-olive);
+  margin: 0;
+}
+
+.spec-card {
+  background: var(--c-white);
+  border: 1px solid var(--c-warm);
+  padding: 28px;
+}
+.spec-card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--c-olive); margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--c-warm);
+}
+.spec-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.spec-row {
+  display: grid; grid-template-columns: 92px 1fr;
+  gap: 14px; align-items: start;
+}
+.spec-key {
+  font-size: 11px; letter-spacing: 0.05em;
+  color: var(--c-muted); font-weight: 700;
+  padding-top: 2px; text-transform: uppercase;
+}
+.spec-val {
+  font-size: 13px; line-height: 1.6;
+  color: var(--c-text); font-weight: 500;
+}
+
+.case-features {
+  background: var(--c-dark);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-bottom: 56px;
+}
+.feature-card {
+  background: var(--c-dark);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 36px 28px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.feature-card:hover {
+  background: rgba(37,196,174,0.07);
+  border-color: rgba(37,196,174,0.25);
+}
+.feature-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 56px; font-weight: 600;
+  color: rgba(37,196,174,0.7); line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+.feature-card:hover .feature-num { color: var(--c-teal2); }
+.feature-title {
+  font-family: 'NanumSquare', sans-serif;
+  font-size: 17px; font-weight: 700; color: var(--c-white);
+  line-height: 1.4; margin-bottom: 12px;
+}
+.feature-desc {
+  font-size: 12.5px; color: rgba(255,255,255,0.55); line-height: 1.85;
+}
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  background: var(--c-warm);
+  margin-bottom: 56px;
+}
+.gallery-item {
+  position: relative; overflow: hidden;
+  background: var(--c-dark);
+}
+.gallery-item img {
+  width: 100%; height: 100%; display: block;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease);
+}
+.gallery-item:hover img { transform: scale(1.04); }
+.gallery-item.tall { grid-row: span 2; }
+.gallery-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(21,26,20,0.85), transparent);
+  color: var(--c-white);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.gallery-item:hover .gallery-caption { opacity: 1; transform: none; }
+.gallery-caption-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; letter-spacing: 0.2em;
+  color: var(--c-teal2); margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.gallery-caption-text { font-size: 13px; line-height: 1.4; font-weight: 500; }
+
+.case-scope {
+  background: var(--c-white);
+  border: 1px solid var(--c-warm);
+  padding: 36px;
+}
+.case-scope-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--c-olive); margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--c-warm);
+}
+.scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 32px; }
+.scope-item { display: flex; align-items: flex-start; gap: 14px; }
+.scope-check {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--c-teal2);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+}
+.scope-check svg { width: 11px; height: 11px; color: var(--c-white); }
+.scope-content { flex: 1; }
+.scope-title {
+  font-family: 'NanumSquare', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--c-dark); margin-bottom: 4px;
+  line-height: 1.4;
+}
+.scope-desc { font-size: 12px; line-height: 1.7; color: var(--c-muted); }
+
+@media (max-width: 1100px) {
+  .case-features { grid-template-columns: 1fr; }
+  .case-overview { grid-template-columns: 1fr; gap: 36px; }
+  .case-meta { grid-template-columns: repeat(2, 1fr); }
+  .scope-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .case { margin-bottom: 64px; }
+  .case-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .case-tagline { text-align: left; }
+  .case-name { font-size: 28px; }
+  .case-hero-img { aspect-ratio: 4 / 3; margin-bottom: 36px; }
+  .case-meta { grid-template-columns: 1fr; }
+  .case-meta-item { border-right: none; border-bottom: 1px solid var(--c-warm); }
+  .case-meta-item:last-child { border-bottom: none; }
+  .case-overview { gap: 32px; margin-bottom: 36px; }
+  .case-features { margin-bottom: 36px; }
+  .case-gallery { grid-template-columns: 1fr; margin-bottom: 36px; }
+  .gallery-item.tall { grid-row: auto; }
+  .gallery-item img { aspect-ratio: 4 / 3; }
+  .case-scope { padding: 24px; }
+}
+</style>

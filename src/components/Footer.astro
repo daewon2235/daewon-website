@@ -1,0 +1,154 @@
+---
+// 페이지 공통 푸터
+---
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img src="/logo.png" alt="(주)대원모빌랙 로고" />
+      <p>공간에 가치를 더하는 기업<br>사무용·산업용·박물관용 랙 시스템 전문 제조기업</p>
+
+      <div class="footer-info-block">
+        <div class="footer-info-label">본사 / 공장</div>
+        <p class="footer-info-text">
+          충청북도 음성군 삼성면 대덕로 63-75<br>
+          Tel. 043) 878-7341~3 &nbsp;|&nbsp; Fax. 043) 878-7344
+        </p>
+      </div>
+
+      <div class="footer-info-block">
+        <div class="footer-info-label">서울 영업본부 / 박물관사업부</div>
+        <p class="footer-info-text">
+          서울특별시 광진구 자양로 58 태림빌딩 4층<br>
+          Tel. 02) 2235-2693~4 &nbsp;|&nbsp; Fax. 02) 2235-2695
+        </p>
+      </div>
+
+      <div>
+        <div class="footer-info-label">Email</div>
+        <a href="mailto:info@mobile-rack.co.kr" class="footer-email">
+          info@mobile-rack.co.kr
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">회사 소개</div>
+      <ul class="footer-links">
+        <li><a href="/#story">회사 소개</a></li>
+        <li><a href="#">연혁 &amp; 비전</a></li>
+        <li><a href="#">인증서</a></li>
+        <li><a href="#">찾아오시는 길</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">제품</div>
+      <ul class="footer-links">
+        <li><a href="/#products">이동식 서가 / 모빌랙</a></li>
+        <li><a href="/#products">박물관용 수장대</a></li>
+        <li><a href="/#products">중량랙 / 파렛트랙</a></li>
+        <li><a href="#">맞춤 옵션</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">고객 지원</div>
+      <ul class="footer-links">
+        <li><a href="/#support">상담 문의</a></li>
+        <li><a href="#">A/S 신청</a></li>
+        <li><a href="#">카탈로그 다운로드</a></li>
+        <li><a href="#">DW MALL</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-business">
+    <p>
+      <span>상호명:</span> (주)대원모빌랙 &nbsp;|&nbsp;
+      <span>대표전화:</span> 02) 2235-2693~4 &nbsp;|&nbsp;
+      <span>팩스:</span> 02) 2235-2695 &nbsp;|&nbsp;
+      <span>사업자등록번호:</span> 126-81-68669
+    </p>
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-copy">Copyright © Daewon Mobile Rack. All Rights Reserved.</span>
+    <div class="footer-badges">
+      <span class="footer-badge">ISO 9001</span>
+      <span class="footer-badge">ISO 14001</span>
+      <span class="footer-badge">Good Design</span>
+      <span class="footer-badge">Inno-Biz</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+footer { background: var(--c-dark); padding: 64px 80px 40px; }
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand img { height: 44px; width: auto; display: block; margin-bottom: 16px; }
+.footer-brand p {
+  font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.7; max-width: 240px;
+  margin-bottom: 20px;
+}
+.footer-info-block { margin-bottom: 16px; }
+.footer-info-label {
+  font-family: 'NanumSquare', sans-serif;
+  font-size: 10px; letter-spacing: 0.12em; color: var(--c-teal2);
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.footer-info-text { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.8; }
+.footer-email {
+  font-size: 12px; color: rgba(255,255,255,0.55); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-email:hover { color: var(--c-teal2); }
+.footer-col-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a {
+  font-size: 13px; color: rgba(255,255,255,0.55);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--c-teal2); }
+
+.footer-business {
+  padding: 20px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 24px;
+}
+.footer-business p {
+  font-size: 11px; color: rgba(255,255,255,0.3); line-height: 2; word-break: keep-all;
+}
+.footer-business span { color: rgba(255,255,255,0.45); font-weight: 500; }
+
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+.footer-copy {
+  font-family: 'NanumSquare', sans-serif;
+  font-size: 10px; color: rgba(255,255,255,0.25);
+  letter-spacing: 0.1em;
+}
+.footer-badges { display: flex; gap: 12px; }
+.footer-badge {
+  font-family: 'NanumSquare', sans-serif;
+  font-size: 9px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 4px 10px; border-radius: 2px; text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  footer { padding: 48px 24px 32px; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 16px; }
+}
+</style>

@@ -1,0 +1,83 @@
+/* ─── 디자인 시스템 (메인 사이트와 동일) ─── */
+:root {
+  --c-dark:    #151a14;
+  --c-olive:   #3d5c38;
+  --c-olive2:  #5a7d52;
+  --c-teal:    #1f9e8c;
+  --c-teal2:   #25c4ae;
+  --c-lime:    #8db53d;
+  --c-cream:   #f3f0e8;
+  --c-warm:    #e8e4d8;
+  --c-text:    #1c221b;
+  --c-muted:   #6b7568;
+  --c-white:   #ffffff;
+  --nav-h:     72px;
+  --tabs-h:    78px;
+  --ease:      cubic-bezier(0.16,1,0.3,1);
+}
+
+@font-face {
+  font-family: 'NanumSquareOTF';
+  src: local('NanumSquareOTF Regular'), local('NanumSquareOTFR'),
+       local('NanumSquare Regular'), local('NanumSquareR');
+  font-weight: 400;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + var(--tabs-h) + 20px); }
+body {
+  font-family: 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  background: var(--c-cream);
+  color: var(--c-text);
+  overflow-x: hidden;
+}
+
+/* 공통 섹션 */
+.section { padding: 120px 80px; }
+.section-inner { max-width: 1400px; margin: 0 auto; }
+.section-tag {
+  font-family: 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  font-size: 11px; color: var(--c-teal);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 20px; display: block;
+}
+.section-h2 {
+  font-family: 'Barlow Condensed', 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  font-size: clamp(36px, 4.5vw, 58px);
+  font-weight: 800; text-transform: uppercase;
+  line-height: 1.05; letter-spacing: -0.01em;
+  margin-bottom: 32px;
+}
+.section-h2 em { color: var(--c-teal); font-style: normal; }
+
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* 공통 버튼 */
+.btn-primary {
+  font-family: 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  font-size: 14px; font-weight: 700;
+  background: var(--c-teal2); color: var(--c-dark);
+  border: none; padding: 14px 32px; cursor: pointer;
+  letter-spacing: 0.05em; transition: all 0.2s;
+  display: inline-block; text-decoration: none;
+}
+.btn-primary:hover { background: var(--c-lime); transform: translateY(-2px); }
+.btn-ghost {
+  font-family: 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  font-size: 14px; font-weight: 600;
+  background: transparent; color: rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 13px 32px; cursor: pointer;
+  letter-spacing: 0.05em; transition: all 0.2s;
+  display: inline-block; text-decoration: none;
+}
+.btn-ghost:hover { border-color: var(--c-teal2); color: var(--c-teal2); }
+
+/* 스크롤바 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--c-dark); }
+::-webkit-scrollbar-thumb { background: var(--c-olive2); border-radius: 3px; }
