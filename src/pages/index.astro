@@ -201,7 +201,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
   <div class="products-grid reveal">
     <div class="product-card">
-      <div class="product-img" style="height:320px; background: linear-gradient(135deg,#1e3020,#162516);">
+      <div class="product-img" style="height:320px; --t1: rgba(30,48,32,0.66); --t2: rgba(22,37,22,0.86); background: url('/mobilerack.jpg') center/cover;">
+        <div class="product-tint"></div>
         <div class="product-img-icon">MOBILRACK</div>
         <span class="product-img-badge">Best Seller</span>
       </div>
@@ -219,7 +220,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <div class="product-card">
-      <div class="product-img" style="height:320px; background: linear-gradient(135deg,#1a2a2e,#102025);">
+      <div class="product-img" style="height:320px; --t1: rgba(26,42,46,0.58); --t2: rgba(16,32,37,0.82); background: url('/museum.jpg') center/cover;">
+        <div class="product-tint"></div>
         <div class="product-img-icon">MUSEUM</div>
         <span class="product-img-badge">Flagship</span>
       </div>
@@ -237,7 +239,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <div class="product-card">
-      <div class="product-img" style="height:320px; background: linear-gradient(135deg,#28201a,#1e1610);">
+      <div class="product-img" style="height:320px; --t1: rgba(40,32,26,0.62); --t2: rgba(30,22,16,0.84); background: url('/heavy.jpg') center/cover;">
+        <div class="product-tint"></div>
         <div class="product-img-icon">HEAVY</div>
       </div>
       <div class="product-overlay"></div>
@@ -254,7 +257,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <div class="product-card">
-      <div class="product-img" style="height:320px; background: linear-gradient(135deg,#201e28,#18161e);">
+      <div class="product-img" style="height:320px; --t1: rgba(32,30,40,0.66); --t2: rgba(24,22,30,0.88); background: url('/option.jpg') center/cover;">
+        <div class="product-tint"></div>
         <div class="product-img-icon">OPTION+</div>
       </div>
       <div class="product-overlay"></div>
@@ -867,19 +871,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .product-card:hover .product-overlay { opacity: 1; }
 .product-img {
   height: 280px;
+  position: relative;
   background: linear-gradient(135deg, #2a3a2a 0%, #1e2e20 100%);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   transition: transform 0.6s var(--ease);
 }
 .product-card:hover .product-img { transform: scale(1.03); }
+/* 색감 오버레이 (각 카드의 --t1/--t2 그라데이션). 실제 div 레이어 → 호버 시 사라져 사진이 선명해짐 */
+.product-tint {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--t1, rgba(20,28,20,0.7)), var(--t2, rgba(14,20,14,0.85)));
+  transition: opacity 0.45s var(--ease);
+  z-index: 1; pointer-events: none;
+}
+.product-card:hover .product-tint { opacity: 0; }
 .product-img-icon {
+  position: relative; z-index: 2;
   font-family: 'Barlow Condensed', 'NanumSquare', 'NanumSquareOTF', sans-serif;
   font-size: 80px; font-weight: 800;
-  color: rgba(255,255,255,0.22); line-height: 1;
+  color: rgba(255,255,255,0.36); line-height: 1;
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 18px rgba(0,0,0,0.5);
   user-select: none;
+  transition: color 0.45s var(--ease), text-shadow 0.45s var(--ease);
+}
+/* 호버 시 글자는 선명한 흰색으로 유지 (사진 위에서도 잘 보이게) */
+.product-card:hover .product-img-icon {
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 2px 22px rgba(0,0,0,0.55), 0 0 3px rgba(0,0,0,0.4);
 }
 .product-img-badge {
   position: absolute; top: 16px; left: 16px;
@@ -933,7 +953,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 .product-tag-toggle:hover { background: rgba(31,158,140,0.20); }
 .product-overlay {
   position: absolute; inset: 0;
-  background: rgba(31,158,140,0.08);
+  background: transparent;
   border: 2px solid rgba(37,196,174,0.3);
   opacity: 0; transition: opacity 0.3s;
   pointer-events: none;

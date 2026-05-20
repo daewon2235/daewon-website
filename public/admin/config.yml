@@ -1,0 +1,116 @@
+# ═══════════════════════════════════════════════════════════
+#  대원모빌랙 설치 사례 — Decap CMS 설정
+#  이 파일의 필드는 src/content/config.ts 스키마와 1:1로 맞춰져 있습니다.
+# ═══════════════════════════════════════════════════════════
+
+# 배포(8단계) 시 사용할 백엔드. 지금은 아래 local_backend가 우선합니다.
+backend:
+  name: git-gateway
+  branch: main
+
+# ─── 로컬 테스트 모드 ───
+# npx decap-server 를 켜고 이 페이지를 열면, 로그인 없이
+# 내 컴퓨터의 실제 파일에 바로 저장됩니다. (8단계에서 인증 연결)
+local_backend: true
+
+# ─── 이미지 저장 위치 ───
+# 업로드한 사진은 public/images 에 저장되고,
+# 마크다운에는 /images/파일명 형태로 기록됩니다.
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "cases"
+    label: "설치 사례"
+    label_singular: "사례"
+    folder: "src/content/cases"
+    create: true
+    # 새 사례의 파일명은 아래 url_id 값으로 만들어집니다 (예: gongju-museum.md)
+    slug: "{{fields.url_id}}"
+    identifier_field: "title"
+    extension: "md"
+    format: "yaml-frontmatter"
+    summary: "{{title}}  ·  {{year}}"
+    sortable_fields: ["published_date", "year", "title"]
+    fields:
+      # ─── 파일 식별자 (직원이 영문으로 입력) ───
+      - label: "파일 주소 (영문 소문자·하이픈만)"
+        name: "url_id"
+        widget: "string"
+        hint: "이 사례를 구분하는 영문 파일명입니다. 한글·띄어쓰기 없이 영문 소문자와 하이픈(-)만. 예: gongju-museum"
+        pattern: ['^[a-z0-9-]+$', '영문 소문자, 숫자, 하이픈(-)만 사용할 수 있습니다.']
+
+      # ─── 기본 정보 ───
+      - { label: "박물관/기관 이름 (제목)", name: "title", widget: "string" }
+      - { label: "한 줄 요약 (부제)", name: "subtitle", widget: "string" }
+
+      # ─── 카테고리 (복수 선택 가능) ───
+      - label: "카테고리 (1개 이상 선택)"
+        name: "categories"
+        widget: "select"
+        multiple: true
+        min: 1
+        max: 5
+        options: ["박물관", "도서관", "교육기관", "공공기관", "창고·물류"]
+
+      # ─── 메타 정보 ───
+      - { label: "발주처", name: "client", widget: "string" }
+      - { label: "위치", name: "location", widget: "string" }
+      - { label: "준공 연도", name: "year", widget: "number", value_type: "int", min: 1986, max: 2100 }
+      - { label: "설치 범위 (요약 한 줄)", name: "scope_summary", widget: "string" }
+
+      # ─── 대표 이미지 ───
+      - { label: "대표 이미지 (외관/대표 사진)", name: "hero_image", widget: "image" }
+      - { label: "대표 이미지 설명 (접근성용, 선택)", name: "hero_image_alt", widget: "string", required: false, default: "" }
+
+      # ─── 인용구 (선택) ───
+      - { label: "인용구 (선택)", name: "quote", widget: "string", required: false }
+
+      # ─── 본문 (마크다운 본체) ───
+      - { label: "본문 (Overview)", name: "body", widget: "markdown" }
+
+      # ─── 프로젝트 사양 (반복) ───
+      - label: "프로젝트 사양 (Specs)"
+        name: "specs"
+        widget: "list"
+        summary: "{{fields.key}} : {{fields.value}}"
+        fields:
+          - { label: "항목", name: "key", widget: "string" }
+          - { label: "내용", name: "value", widget: "string" }
+
+      # ─── 핵심 특징 (최대 6개) ───
+      - label: "핵심 특징 (Key Features, 최대 6개)"
+        name: "features"
+        widget: "list"
+        max: 6
+        summary: "{{fields.title}}"
+        fields:
+          - { label: "제목", name: "title", widget: "string" }
+          - { label: "설명", name: "description", widget: "text" }
+
+      # ─── 갤러리 (반복) ───
+      - label: "갤러리 (사진 + 라벨 + 캡션)"
+        name: "gallery"
+        widget: "list"
+        summary: "{{fields.label}}"
+        fields:
+          - { label: "사진", name: "image", widget: "image" }
+          - { label: "라벨 (영문, 예: Mobile Rack)", name: "label", widget: "string" }
+          - { label: "캡션", name: "caption", widget: "string" }
+
+      # ─── 납품 범위 (반복) ───
+      - label: "납품 범위 (Scope of Work)"
+        name: "scope_items"
+        widget: "list"
+        summary: "{{fields.title}}"
+        fields:
+          - { label: "항목 제목", name: "title", widget: "string" }
+          - { label: "설명", name: "description", widget: "text" }
+
+      # ─── 발행 설정 ───
+      - { label: "발행 여부 (체크 해제 시 사이트에 표시 안 됨)", name: "published", widget: "boolean", default: true }
+      - { label: "발행일", name: "published_date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: false }
+      - { label: "사례 번호 (표시용, 선택)", name: "case_number", widget: "number", value_type: "int", required: false }
+
+      # ─── SEO (선택) ───
+      - { label: "검색엔진 설명 (SEO, 선택)", name: "seo_description", widget: "text", required: false }

@@ -9,6 +9,9 @@ import { defineCollection, z } from 'astro:content';
 const cases = defineCollection({
   type: 'content',
   schema: z.object({
+    // ─── 파일 식별자 (CMS가 파일명을 만들 때 사용. URL 라우팅에는 미사용) ───
+    url_id: z.string().optional(),
+
     // ─── 기본 정보 ───
     title: z.string(),                          // 박물관 이름 (필수)
     subtitle: z.string(),                       // 한 줄 요약 (필수)
