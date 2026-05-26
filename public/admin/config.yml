@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════
-#  대원모빌랙 설치 사례 — Decap CMS 설정
+#  대원모빌랙 — Decap CMS 설정
 #  이 파일의 필드는 src/content/config.ts 스키마와 1:1로 맞춰져 있습니다.
 # ═══════════════════════════════════════════════════════════
 
@@ -20,6 +20,9 @@ media_folder: "public/images"
 public_folder: "/images"
 
 collections:
+  # ═══════════════════════════════════════════════════════════
+  #  1. 설치 사례
+  # ═══════════════════════════════════════════════════════════
   - name: "cases"
     label: "설치 사례"
     label_singular: "사례"
@@ -111,6 +114,114 @@ collections:
       - { label: "발행 여부 (체크 해제 시 사이트에 표시 안 됨)", name: "published", widget: "boolean", default: true }
       - { label: "발행일", name: "published_date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: false }
       - { label: "사례 번호 (표시용, 선택)", name: "case_number", widget: "number", value_type: "int", required: false }
+
+      # ─── SEO (선택) ───
+      - { label: "검색엔진 설명 (SEO, 선택)", name: "seo_description", widget: "text", required: false }
+
+  # ═══════════════════════════════════════════════════════════
+  #  2. 제품
+  #  새 제품을 등록하면 '소속 제품군' 페이지(/products/...)에 자동 표시됩니다.
+  # ═══════════════════════════════════════════════════════════
+  - name: "products"
+    label: "제품"
+    label_singular: "제품"
+    folder: "src/content/products"
+    create: true
+    # 새 제품의 파일명은 아래 url_id 값으로 만들어집니다 (예: mobile-rack-system.md)
+    slug: "{{fields.url_id}}"
+    identifier_field: "name"
+    extension: "md"
+    format: "yaml-frontmatter"
+    summary: "{{name}}"
+    sortable_fields: ["display_order", "published_date", "name"]
+    fields:
+      # ─── 파일 식별자 (직원이 영문으로 입력) ───
+      - label: "파일 주소 (영문 소문자·하이픈만)"
+        name: "url_id"
+        widget: "string"
+        hint: "이 제품을 구분하는 영문 파일명입니다. 한글·띄어쓰기 없이 영문 소문자와 하이픈(-)만. 예: mobile-rack-system"
+        pattern: ['^[a-z0-9-]+$', '영문 소문자, 숫자, 하이픈(-)만 사용할 수 있습니다.']
+
+      # ─── 기본 정보 ───
+      - { label: "제품명", name: "name", widget: "string" }
+      - { label: "영문명 (선택)", name: "name_en", widget: "string", required: false }
+      - { label: "한 줄 요약 (부제)", name: "subtitle", widget: "string" }
+
+      # ─── 소속 제품군 (1개 이상 선택) ───
+      - label: "소속 제품군 (1개 이상 선택)"
+        name: "families"
+        widget: "select"
+        multiple: true
+        min: 1
+        max: 4
+        hint: "이 제품이 표시될 제품군 페이지를 선택합니다."
+        options: ["서가·모빌랙", "박물관용", "중량랙", "맞춤옵션"]
+
+      # ─── 분류 라벨 ───
+      - { label: "분류 라벨 (용도/대상, 예: 기록물 & 물류 보관용)", name: "category_label", widget: "string", required: false, default: "" }
+
+      # ─── 대표 이미지 ───
+      - { label: "대표 이미지 (제품 사진)", name: "hero_image", widget: "image" }
+      - { label: "대표 이미지 설명 (접근성용, 선택)", name: "hero_image_alt", widget: "string", required: false, default: "" }
+
+      # ─── 배지 (선택) ───
+      - { label: "배지 (선택, 예: Best Seller / Flagship / 신제품)", name: "badge", widget: "string", required: false }
+
+      # ─── 본문 (마크다운 본체) ───
+      - { label: "본문 (Overview)", name: "body", widget: "markdown" }
+
+      # ─── 제품 라인업 (세부 제품/사양 이름, 칩으로 표시) ───
+      - label: "제품 라인업 (세부 제품/사양 이름)"
+        name: "lineup"
+        widget: "list"
+        hint: "예: 핸들식모빌랙, 전동식모빌랙 … 하나씩 추가하세요."
+        field: { label: "이름", name: "item", widget: "string" }
+
+      # ─── 제품 사양 (반복) ───
+      - label: "제품 사양 (Specs)"
+        name: "specs"
+        widget: "list"
+        required: false
+        summary: "{{fields.key}} : {{fields.value}}"
+        fields:
+          - { label: "항목", name: "key", widget: "string" }
+          - { label: "내용", name: "value", widget: "string" }
+
+      # ─── 핵심 특징 (최대 6개) ───
+      - label: "핵심 특징 (Key Features, 최대 6개)"
+        name: "features"
+        widget: "list"
+        required: false
+        max: 6
+        summary: "{{fields.title}}"
+        fields:
+          - { label: "제목", name: "title", widget: "string" }
+          - { label: "설명", name: "description", widget: "text" }
+
+      # ─── 갤러리 (반복) ───
+      - label: "갤러리 (사진 + 라벨 + 캡션)"
+        name: "gallery"
+        widget: "list"
+        required: false
+        summary: "{{fields.label}}"
+        fields:
+          - { label: "사진", name: "image", widget: "image" }
+          - { label: "라벨 (영문, 예: Mobile Rack)", name: "label", widget: "string" }
+          - { label: "캡션", name: "caption", widget: "string" }
+
+      # ─── 관련 설치 사례 연결 (사례 카테고리 기준 자동 매칭) ───
+      - label: "관련 설치 사례 분야 (선택, 복수 가능)"
+        name: "related_case_categories"
+        widget: "select"
+        multiple: true
+        required: false
+        hint: "선택한 분야의 발행된 설치 사례가 이 제품 하단에 자동으로 연결됩니다."
+        options: ["박물관", "도서관", "교육기관", "공공기관", "창고·물류"]
+
+      # ─── 발행 설정 ───
+      - { label: "발행 여부 (체크 해제 시 사이트에 표시 안 됨)", name: "published", widget: "boolean", default: true }
+      - { label: "발행일", name: "published_date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: false }
+      - { label: "정렬 순서 (작을수록 먼저, 선택)", name: "display_order", widget: "number", value_type: "int", min: 0, required: false }
 
       # ─── SEO (선택) ───
       - { label: "검색엔진 설명 (SEO, 선택)", name: "seo_description", widget: "text", required: false }

@@ -69,4 +69,77 @@ const cases = defineCollection({
   }),
 });
 
-export const collections = { cases };
+/**
+ * 제품(Products) 컬렉션 스키마
+ *
+ * 설치 사례와 동일한 방식으로 운영됩니다. 직원이 Decap CMS에서 신제품을
+ * 등록하면, 소속 "제품군"에 따라 해당 제품군 페이지(/products/{슬러그})에
+ * 자동으로 표시됩니다. (제품군 매핑은 src/lib/products.ts 참고)
+ */
+const products = defineCollection({
+  type: 'content',
+  schema: z.object({
+    // ─── 파일 식별자 (CMS가 파일명을 만들 때 사용. URL 라우팅에는 미사용) ───
+    url_id: z.string().optional(),
+
+    // ─── 기본 정보 ───
+    name: z.string(),                           // 제품명 (필수)
+    name_en: z.string().optional(),             // 영문명 (선택)
+    subtitle: z.string(),                       // 한 줄 요약 (필수)
+
+    // ─── 소속 제품군 (다중 선택 가능, 1개 이상) ───
+    families: z.array(
+      z.enum(['서가·모빌랙', '박물관용', '중량랙', '맞춤옵션'])
+    ).min(1).max(4),
+
+    // ─── 분류 라벨 (용도/대상, 예: "기록물 & 물류 보관용") ───
+    category_label: z.string().default(''),
+
+    // ─── 대표 이미지 ───
+    hero_image: z.string(),                     // 제품 대표 사진 경로
+    hero_image_alt: z.string().default(''),     // 접근성용 대체 텍스트
+
+    // ─── 배지 (선택, 예: Best Seller / Flagship / 신제품) ───
+    badge: z.string().optional(),
+
+    // ─── 라인업 (제품군 내 세부 제품/사양 이름들, 칩으로 표시) ───
+    lineup: z.array(z.string()).default([]),
+
+    // ─── 인용구 (선택) ───
+    quote: z.string().optional(),
+
+    // ─── 제품 사양 (key-value 반복) ───
+    specs: z.array(z.object({
+      key: z.string(),
+      value: z.string(),
+    })).default([]),
+
+    // ─── Key Features (최대 6개) ───
+    features: z.array(z.object({
+      title: z.string(),
+      description: z.string(),
+    })).max(6).default([]),
+
+    // ─── Gallery (이미지 + 라벨 + 캡션) ───
+    gallery: z.array(z.object({
+      image: z.string(),
+      label: z.string(),
+      caption: z.string(),
+    })).default([]),
+
+    // ─── 관련 설치 사례 연결 (사례 카테고리 기준 자동 매칭) ───
+    related_case_categories: z.array(
+      z.enum(['박물관', '도서관', '교육기관', '공공기관', '창고·물류'])
+    ).default([]),
+
+    // ─── 발행 설정 ───
+    published: z.boolean().default(true),       // 발행 여부
+    published_date: z.date(),                   // 발행일
+    display_order: z.number().int().min(0).optional(), // 정렬 순서 (작을수록 먼저)
+
+    // ─── SEO (선택) ───
+    seo_description: z.string().optional(),
+  }),
+});
+
+export const collections = { cases, products };

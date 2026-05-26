@@ -1,0 +1,116 @@
+---
+// 제품군 sticky 서브탭 (설치 사례의 CategoryTabs와 동일 구조)
+type ProductFamily = '서가·모빌랙' | '박물관용' | '중량랙' | '맞춤옵션';
+interface Props {
+  active: ProductFamily;
+}
+const { active } = Astro.props;
+
+// 제품군별 URL 매핑 (영문 슬러그) — src/lib/products.ts 와 동일하게 유지
+const slugMap: Record<ProductFamily, string> = {
+  '서가·모빌랙': 'mobile-rack',
+  '박물관용': 'museum',
+  '중량랙': 'heavy-rack',
+  '맞춤옵션': 'option',
+};
+
+const families: { name: ProductFamily; svg: string }[] = [
+  {
+    name: '서가·모빌랙',
+    svg: `<rect x="3" y="4" width="18" height="15" rx="0.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="12" y1="4" x2="12" y2="19"/><line x1="2" y1="21" x2="22" y2="21"/>`
+  },
+  {
+    name: '박물관용',
+    svg: `<path d="M3 9l9-5 9 5"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="6" y1="10" x2="6" y2="18"/><line x1="10" y1="10" x2="10" y2="18"/><line x1="14" y1="10" x2="14" y2="18"/><line x1="18" y1="10" x2="18" y2="18"/><line x1="3" y1="18" x2="21" y2="18"/><line x1="2.5" y1="21" x2="21.5" y2="21"/>`
+  },
+  {
+    name: '중량랙',
+    svg: `<line x1="4" y1="3" x2="4" y2="21"/><line x1="20" y1="3" x2="20" y2="21"/><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="15" x2="20" y2="15"/><rect x="7" y="9.5" width="4.5" height="4.5"/><rect x="13" y="16.5" width="4.5" height="4.5"/>`
+  },
+  {
+    name: '맞춤옵션',
+    svg: `<line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.3"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.3"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.3"/>`
+  },
+];
+---
+
+<div class="fam-tabs-wrap">
+  <nav class="fam-tabs" aria-label="제품군">
+    {families.map(fam => (
+      <a
+        class:list={['fam-tab', fam.name === active && 'active']}
+        href={`/products/${slugMap[fam.name]}`}
+        aria-current={fam.name === active ? 'page' : undefined}
+      >
+        <span class="fam-tab-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+               stroke-linecap="round" stroke-linejoin="round" set:html={fam.svg} />
+        </span>
+        <span class="fam-tab-name">{fam.name}</span>
+      </a>
+    ))}
+  </nav>
+</div>
+
+<style>
+.fam-tabs-wrap {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 90;
+  background: rgba(21,26,20,0.95);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.fam-tabs {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  max-width: 1400px; margin: 0 auto;
+}
+.fam-tab {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; padding: 22px 16px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.55);
+  border-right: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s, color 0.2s;
+  position: relative; cursor: pointer;
+}
+.fam-tab:last-child { border-right: none; }
+.fam-tab::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--c-teal2);
+  transform: scaleX(0);
+  transition: transform 0.3s var(--ease);
+}
+.fam-tab:hover { color: var(--c-white); background: rgba(37,196,174,0.05); }
+.fam-tab:hover .fam-tab-icon { color: var(--c-teal2); }
+.fam-tab.active { color: var(--c-white); background: rgba(37,196,174,0.08); }
+.fam-tab.active::after { transform: scaleX(1); }
+.fam-tab.active .fam-tab-icon { color: var(--c-teal2); }
+.fam-tab-icon {
+  width: 28px; height: 28px; flex-shrink: 0;
+  color: rgba(255,255,255,0.7);
+  transition: color 0.2s;
+}
+.fam-tab-icon svg { width: 100%; height: 100%; display: block; }
+.fam-tab-name {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: 15px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+@media (max-width: 1100px) {
+  .fam-tab-name { font-size: 13px; }
+}
+
+@media (max-width: 768px) {
+  .fam-tabs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .fam-tabs {
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
+    min-width: 520px;
+  }
+  .fam-tab { padding: 16px 12px; gap: 8px; }
+  .fam-tab-icon { width: 22px; height: 22px; }
+  .fam-tab-name { font-size: 12px; }
+}
+</style>

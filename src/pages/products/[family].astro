@@ -1,36 +1,41 @@
 ---
-// 동적 라우트: /cases/museum, /cases/library, ...
-// 한 파일로 5개 카테고리 페이지를 모두 처리합니다.
+// 동적 라우트: /products/mobile-rack, /products/museum, ...
+// 한 파일로 4개 제품군 페이지를 모두 처리합니다.
+// (설치 사례의 src/pages/cases/[category].astro 와 동일 구조)
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import CategoryTabs from '../../components/CategoryTabs.astro';
-import CaseBlock from '../../components/CaseBlock.astro';
-import { categoryMap, categoryMeta, enLabelMap } from '../../lib/categories';
+import ProductTabs from '../../components/ProductTabs.astro';
+import ProductBlock from '../../components/ProductBlock.astro';
+import { familyMap, familyMeta, familyEnLabelMap } from '../../lib/products';
 
-// 정적 경로 생성 (5개 카테고리 페이지를 빌드 시 미리 생성)
+// 정적 경로 생성 (4개 제품군 페이지를 빌드 시 미리 생성)
 export async function getStaticPaths() {
-  return Object.keys(categoryMap).map(slug => ({
-    params: { category: slug },
+  return Object.keys(familyMap).map(slug => ({
+    params: { family: slug },
   }));
 }
 
-const { category: slugParam } = Astro.params;
-const categoryName = categoryMap[slugParam as string];
-if (!categoryName) {
+const { family: slugParam } = Astro.params;
+const familyName = familyMap[slugParam as string];
+if (!familyName) {
   return Astro.redirect('/');
 }
 
-const meta = categoryMeta[categoryName];
-const enLabel = enLabelMap[categoryName];
+const meta = familyMeta[familyName];
+const enLabel = familyEnLabelMap[familyName];
 
-const allCases = await getCollection('cases', ({ data }) =>
-  data.published && data.categories.includes(categoryName)
+const allProducts = await getCollection('products', ({ data }) =>
+  data.published && data.families.includes(familyName)
 );
-const cases = allCases.sort(
-  (a, b) => b.data.published_date.valueOf() - a.data.published_date.valueOf()
-);
+// 정렬: display_order(작을수록 먼저) → 없으면 발행일 최신순
+const products = allProducts.sort((a, b) => {
+  const ao = a.data.display_order ?? Number.POSITIVE_INFINITY;
+  const bo = b.data.display_order ?? Number.POSITIVE_INFINITY;
+  if (ao !== bo) return ao - bo;
+  return b.data.published_date.valueOf() - a.data.published_date.valueOf();
+});
 
-const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
+const pageTitle = `${meta.title} ${meta.emTitle} — (주)대원모빌랙`;
 ---
 
 <BaseLayout title={pageTitle} description={meta.subtitle}>
@@ -39,59 +44,59 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
       <div class="breadcrumb">
         <a href="/">Home</a>
         <span class="sep">/</span>
-        <a href="/#cases">Portfolio</a>
+        <a href="/#products">Products</a>
         <span class="sep">/</span>
         <span class="current">{meta.title} · {enLabel}</span>
       </div>
-      <span class="page-tag">Installation Cases</span>
+      <span class="page-tag">Product Lineup</span>
       <h1 class="page-title">{meta.title} <em>{meta.emTitle}</em></h1>
       <p class="page-subtitle">{meta.subtitle}</p>
     </div>
   </section>
 
-  <CategoryTabs active={categoryName} />
+  <ProductTabs active={familyName} />
 
-  <section class="cases-wrap">
-    <div class="cases-inner">
-      <div class="cases-count reveal">
-        <div class="cases-count-num">
-          <strong>{String(cases.length).padStart(2, '0')}</strong>개의 {meta.title} 사례
+  <section class="products-wrap">
+    <div class="products-inner">
+      <div class="products-count reveal">
+        <div class="products-count-num">
+          <strong>{String(products.length).padStart(2, '0')}</strong>개의 {familyName} 제품
         </div>
-        <div class="cases-sort">최신순</div>
+        <div class="products-sort">기본 순</div>
       </div>
 
-      {cases.length > 1 && (
-        <div class="case-thumbs reveal">
-          <button class="thumb-nav thumb-nav-prev" type="button" aria-label="이전 사례 보기" hidden>‹</button>
-          <div class="case-thumbs-track" role="tablist" aria-label="사례 선택">
-            {cases.map((entry, i) => (
+      {products.length > 1 && (
+        <div class="product-thumbs reveal">
+          <button class="thumb-nav thumb-nav-prev" type="button" aria-label="이전 제품 보기" hidden>‹</button>
+          <div class="product-thumbs-track" role="tablist" aria-label="제품 선택">
+            {products.map((entry, i) => (
               <button
-                class:list={['case-thumb', i === 0 && 'active']}
+                class:list={['product-thumb', i === 0 && 'active']}
                 type="button"
                 role="tab"
                 aria-selected={i === 0 ? 'true' : 'false'}
                 data-target={entry.slug}
               >
-                {entry.data.title}
+                {entry.data.name}
               </button>
             ))}
           </div>
-          <button class="thumb-nav thumb-nav-next" type="button" aria-label="다음 사례 보기" hidden>›</button>
+          <button class="thumb-nav thumb-nav-next" type="button" aria-label="다음 제품 보기" hidden>›</button>
         </div>
       )}
 
-      {cases.length > 0 ? (
-        <div class="case-stage">
-          {cases.map((entry, i) => (
-            <div class:list={['case-slot', i === 0 && 'active']} data-case={entry.slug}>
-              <CaseBlock entry={entry} caseNum={cases.length - i} />
+      {products.length > 0 ? (
+        <div class="product-stage">
+          {products.map((entry, i) => (
+            <div class:list={['product-slot', i === 0 && 'active']} data-product={entry.slug}>
+              <ProductBlock entry={entry} productNum={i + 1} />
             </div>
           ))}
         </div>
       ) : (
-        <div class="case-empty reveal">
-          <div class="case-empty-tag">Coming Soon</div>
-          <p class="case-empty-text">이 카테고리의 사례가 곧 업데이트됩니다.</p>
+        <div class="product-empty reveal">
+          <div class="product-empty-tag">Coming Soon</div>
+          <p class="product-empty-text">이 제품군의 제품이 곧 업데이트됩니다.</p>
         </div>
       )}
     </div>
@@ -99,15 +104,15 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
 
   <section class="cta">
     <div class="cta-inner">
-      <div class="cta-tag">Next Project</div>
-      <h2 class="cta-title">{meta.title} 수장 환경을 계획 중이신가요?</h2>
+      <div class="cta-tag">Next Step</div>
+      <h2 class="cta-title">{meta.title} 도입을 검토 중이신가요?</h2>
       <p class="cta-desc">
-        유물·자료의 하중·재질·특성에 맞춘 1:1 맞춤 설계부터 시공·유지보수까지.<br>
+        공간·용도·예산에 맞춘 1:1 맞춤 설계부터 제작·시공·유지보수까지.<br>
         대원모빌랙이 40년의 경험으로 함께합니다.
       </p>
       <div class="cta-btns">
-        <button class="btn-primary">견적 문의하기</button>
-        <a href="/#cases" class="btn-ghost">다른 분야 사례 보기</a>
+        <a href="/#support" class="btn-primary">견적 문의하기</a>
+        <a href="/#products" class="btn-ghost">다른 제품군 보기</a>
       </div>
     </div>
   </section>
@@ -159,47 +164,47 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
   max-width: 640px;
 }
 
-.cases-wrap { background: var(--c-cream); }
-.cases-inner { max-width: 1400px; margin: 0 auto; padding: 80px; }
-.cases-count {
+.products-wrap { background: var(--c-cream); }
+.products-inner { max-width: 1400px; margin: 0 auto; padding: 80px; }
+.products-count {
   display: flex; align-items: baseline; justify-content: space-between;
   margin-bottom: 56px;
   padding-bottom: 28px;
   border-bottom: 1px solid var(--c-warm);
 }
-.cases-count-num {
+.products-count-num {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 18px; font-weight: 700;
   color: var(--c-text); letter-spacing: 0.05em;
 }
-.cases-count-num strong {
+.products-count-num strong {
   font-size: 32px; color: var(--c-teal);
   font-weight: 800; margin-right: 6px;
 }
-.cases-sort { font-size: 12px; color: var(--c-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.products-sort { font-size: 12px; color: var(--c-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-.case-empty {
+.product-empty {
   border: 1.5px dashed var(--c-warm);
   background: rgba(255,255,255,0.4);
   padding: 64px 32px; text-align: center;
 }
-.case-empty-tag {
+.product-empty-tag {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px; letter-spacing: 0.2em;
   color: var(--c-muted); text-transform: uppercase;
   margin-bottom: 10px;
 }
-.case-empty-text {
+.product-empty-text {
   font-size: 14px; color: var(--c-muted); line-height: 1.7;
 }
 
-/* ─── 사례 썸네일 선택 바 ─── */
-.case-thumbs {
+/* ─── 제품 썸네일 선택 바 ─── */
+.product-thumbs {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 56px;
   scroll-margin-top: calc(var(--nav-h) + var(--tabs-h, 0px) + 20px);
 }
-.case-thumbs-track {
+.product-thumbs-track {
   flex: 1; min-width: 0;
   display: flex; gap: 8px;
   overflow-x: auto; overflow-y: hidden;
@@ -209,12 +214,12 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
   scrollbar-width: thin;
   scrollbar-color: rgba(0,0,0,0.2) var(--c-warm);
 }
-.case-thumbs-track::-webkit-scrollbar { height: 6px; }
-.case-thumbs-track::-webkit-scrollbar-track { background: var(--c-warm); border-radius: 3px; }
-.case-thumbs-track::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
-.case-thumbs-track::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }
+.product-thumbs-track::-webkit-scrollbar { height: 6px; }
+.product-thumbs-track::-webkit-scrollbar-track { background: var(--c-warm); border-radius: 3px; }
+.product-thumbs-track::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
+.product-thumbs-track::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.35); }
 
-.case-thumb {
+.product-thumb {
   flex: 0 0 auto;
   display: inline-flex; align-items: center;
   background: var(--c-white);
@@ -227,8 +232,8 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
   color: var(--c-muted); line-height: 1;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
-.case-thumb:hover { border-color: var(--c-teal2); color: var(--c-text); }
-.case-thumb.active {
+.product-thumb:hover { border-color: var(--c-teal2); color: var(--c-text); }
+.product-thumb.active {
   background: var(--c-teal);
   border-color: var(--c-teal);
   color: var(--c-white);
@@ -250,9 +255,9 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
 .thumb-nav:disabled { opacity: 0.3; cursor: default; }
 .thumb-nav[hidden] { display: none; }
 
-/* 사례 본문 — 한 번에 하나만 표시 */
-.case-slot { display: none; }
-.case-slot.active { display: block; }
+/* 제품 본문 — 한 번에 하나만 표시 */
+.product-slot { display: none; }
+.product-slot.active { display: block; }
 
 .cta {
   background: var(--c-dark);
@@ -283,37 +288,54 @@ const pageTitle = `${meta.title} 설치 사례 — (주)대원모빌랙`;
 }
 .cta-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; margin-bottom: 36px; }
 .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.cta-btns .btn-primary {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 14px 32px; border-radius: 4px;
+  background: var(--c-teal2); color: var(--c-dark);
+  transition: background 0.25s, transform 0.25s; display: inline-block;
+}
+.cta-btns .btn-primary:hover { background: var(--c-teal); transform: translateY(-2px); }
+.cta-btns .btn-ghost {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; text-decoration: none;
+  padding: 14px 32px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+  transition: border-color 0.25s, color 0.25s; display: inline-block;
+}
+.cta-btns .btn-ghost:hover { border-color: var(--c-teal2); color: var(--c-teal2); }
 
 @media (max-width: 768px) {
   .page-header { padding: calc(var(--nav-h) + 40px) 24px 40px; }
   .page-title { font-size: 32px; }
   .page-subtitle { font-size: 14px; }
-  .cases-inner { padding: 48px 24px; }
+  .products-inner { padding: 48px 24px; }
   .cta { padding: 64px 24px; }
   .breadcrumb { font-size: 11px; flex-wrap: wrap; }
-  .case-thumbs { margin-bottom: 36px; gap: 0; }
+  .product-thumbs { margin-bottom: 36px; gap: 0; }
   .thumb-nav { display: none; }
 }
 </style>
 
 <script>
-// 사례 썸네일 갤러리 — 썸네일을 클릭하면 해당 사례 1건만 표시
-document.addEventListener('astro:page-load', initCaseGallery);
-initCaseGallery();
+// 제품 썸네일 갤러리 — 썸네일을 클릭하면 해당 제품 1건만 표시
+document.addEventListener('astro:page-load', initProductGallery);
+initProductGallery();
 
-function initCaseGallery() {
-  const bar = document.querySelector<HTMLElement>('.case-thumbs');
-  const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>('.case-thumb'));
-  const slots = Array.from(document.querySelectorAll<HTMLElement>('.case-slot'));
+function initProductGallery() {
+  const bar = document.querySelector<HTMLElement>('.product-thumbs');
+  const thumbs = Array.from(document.querySelectorAll<HTMLButtonElement>('.product-thumb'));
+  const slots = Array.from(document.querySelectorAll<HTMLElement>('.product-slot'));
   if (slots.length === 0) return;
 
-  // ── 사례 전환 ──
-  function showCase(slug: string, doScroll: boolean) {
+  // ── 제품 전환 ──
+  function showProduct(slug: string, doScroll: boolean) {
     slots.forEach((s) => {
-      const match = s.dataset.case === slug;
+      const match = s.dataset.product === slug;
       s.classList.toggle('active', match);
       if (match) {
-        // 숨겨져 있던 사례의 reveal 요소를 즉시 노출 (스크롤 애니메이션 의존 X)
         s.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
           el.style.opacity = '1';
           el.style.transform = 'none';
@@ -333,18 +355,18 @@ function initCaseGallery() {
 
   thumbs.forEach((t) => {
     t.addEventListener('click', () => {
-      if (t.dataset.target) showCase(t.dataset.target, true);
+      if (t.dataset.target) showProduct(t.dataset.target, true);
     });
   });
 
-  // ── 진입 시 URL 해시(#슬러그)가 있으면 해당 사례 우선 표시 ──
+  // ── 진입 시 URL 해시(#슬러그)가 있으면 해당 제품 우선 표시 ──
   const hash = decodeURIComponent(location.hash.slice(1));
-  if (hash && slots.some((s) => s.dataset.case === hash)) {
-    showCase(hash, false);
+  if (hash && slots.some((s) => s.dataset.product === hash)) {
+    showProduct(hash, false);
   }
 
   // ── 좌우 화살표 (썸네일이 넘칠 때만 노출) ──
-  const track = document.querySelector<HTMLElement>('.case-thumbs-track');
+  const track = document.querySelector<HTMLElement>('.product-thumbs-track');
   const prev = document.querySelector<HTMLButtonElement>('.thumb-nav-prev');
   const next = document.querySelector<HTMLButtonElement>('.thumb-nav-next');
 

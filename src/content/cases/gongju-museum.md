@@ -36,14 +36,14 @@ features:
       안정적 이동을 보장합니다.
 gallery:
   - image: /images/gongju-01-mobilerack.jpg
-    label: Mobile Rack
-    caption: 이층형 이동식 수장대 전경. 상층은 갱웨이로 연결.
+    label: double decker
+    caption: 유물상자 격납에 최적화된 이층형 이동식 수장대.
   - image: /images/gongju-02-display.jpg
     label: Open Storage
-    caption: 시창을 통해 공개되는 보이는 수장고 정면.
+    caption: 3면이 시창인 브릿지에서 보이는 보이는 수장고의 전시형 수장대
   - image: /images/gongju-03-corridor.jpg
     label: Fixed Storage
-    caption: 고정식 수납 시스템에 정렬된 충청권 매장문화재.
+    caption: 충청권역수장고, 시창에서 보이는 이층형 전시형 수장대
 scope_items:
   - title: 이층형 이동식 수장대 설계
     description: 유물 하중·특성을 고려한 구조 계산, 상·하층 격납 환경 분리 설계, 안전 동선 확보.
@@ -57,7 +57,7 @@ published: true
 published_date: 2023-12-01
 case_number: 1
 seo_description: 충청권 문화유산의 통합 보존을 실현한 중부권 최대 개방형 수장고. 국립공주박물관 충청권역수장고 설치 사례 —
-  이층형 이동식 수장대와 고정식 수납 시스템.
+  이층형 이동식 수장대와 고정식 수납 시스템. 대원모빌랙 수장고사업
 ---
 
 국립공주박물관 충청권역수장고는 충청 지역에서 발굴된 방대한 매장문화재를 **체계적으로 관리하고 국민에게 공개**하기 위해 설립된 대규모 통합 수장 시설입니다.

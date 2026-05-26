@@ -94,7 +94,8 @@ const slugByName = Object.fromEntries(
       <span class="section-tag">Our Story</span>
       <h2 class="section-h2">공간에 <em>가치</em>를<br>더하는 기업</h2>
       <div class="story-quote">
-        <p>사람마다 취향과 라이프스타일이 다르듯,<br>공간의 목적과 특성에 맞는 제품 설계가 필요합니다.</p>
+        <p>"사람은 공간을 만들고, 공간은 사람을 만든다."</p>
+        <cite>— W. Churchill, 영국 의회의사당 재건 연설</cite>
       </div>
       <p class="story-body">
         우리 인류가 남긴 위대한 유산과 기록들은<br>
@@ -203,14 +204,14 @@ const slugByName = Object.fromEntries(
     </div>
     <div class="product-filter">
       <button class="filter-btn active">전체</button>
-      <a class="filter-btn" href="/products/mobile-rack">서가·모빌랙</a>
-      <a class="filter-btn" href="/products/museum">박물관용</a>
-      <a class="filter-btn" href="/products/heavy-rack">중량랙</a>
-      <a class="filter-btn" href="/products/option">맞춤옵션</a>
+      <button class="filter-btn">서가·모빌랙</button>
+      <button class="filter-btn">박물관용</button>
+      <button class="filter-btn">중량랙</button>
+      <button class="filter-btn">맞춤옵션</button>
     </div>
   </div>
   <div class="products-grid reveal">
-    <a class="product-card" href="/products/mobile-rack">
+    <div class="product-card">
       <div class="product-img" style="height:320px; --t1: rgba(30,48,32,0.66); --t2: rgba(22,37,22,0.86); background: url('/mobilerack.jpg') center/cover;">
         <div class="product-tint"></div>
         <div class="product-img-icon">MOBILE-RACK</div>
@@ -228,8 +229,8 @@ const slugByName = Object.fromEntries(
           <span class="product-tag">조달청우수제품</span><span class="product-tag">MAS등록제품</span>
         </div>
       </div>
-    </a>
-    <a class="product-card" href="/products/museum">
+    </div>
+    <div class="product-card">
       <div class="product-img" style="height:320px; --t1: rgba(26,42,46,0.58); --t2: rgba(16,32,37,0.82); background: url('/museum.jpg') center/cover;">
         <div class="product-tint"></div>
         <div class="product-img-icon">MUSEUM</div>
@@ -247,8 +248,8 @@ const slugByName = Object.fromEntries(
           <span class="product-tag">회화류수장대</span><span class="product-tag">복합식수장대</span>
         </div>
       </div>
-    </a>
-    <a class="product-card" href="/products/heavy-rack">
+    </div>
+    <div class="product-card">
       <div class="product-img" style="height:320px; --t1: rgba(40,32,26,0.62); --t2: rgba(30,22,16,0.84); background: url('/heavy.jpg') center/cover;">
         <div class="product-tint"></div>
         <div class="product-img-icon">HEAVY</div>
@@ -265,8 +266,8 @@ const slugByName = Object.fromEntries(
           <span class="product-tag">암랙</span><span class="product-tag">캔틸레버랙</span>
         </div>
       </div>
-    </a>
-    <a class="product-card" href="/products/option">
+    </div>
+    <div class="product-card">
       <div class="product-img" style="height:320px; --t1: rgba(32,30,40,0.66); --t2: rgba(24,22,30,0.88); background: url('/option.jpg') center/cover;">
         <div class="product-tint"></div>
         <div class="product-img-icon">OPTION+</div>
@@ -293,7 +294,7 @@ const slugByName = Object.fromEntries(
           <button class="product-tag-toggle" type="button">+ 더 보기</button>
         </div>
       </div>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -325,30 +326,26 @@ const slugByName = Object.fromEntries(
   <h2 class="section-h2 reveal" style="color:var(--c-white)">주문에서<br>설치까지</h2>
   <p class="how-intro reveal">상담부터 설치, 사용, 이전·A/S까지 대원모빌랙이 전 과정을 함께합니다.</p>
   <div class="how-grid">
-    <a class="how-card reveal" href="#support">
+    <div class="how-card reveal">
       <div class="how-num">01</div>
       <div class="how-title">상담</div>
       <div class="how-desc">공간 도면 및 사용 목적을 공유해주시면 전문 컨설턴트가 최적안을 제안합니다. 전화·이메일·카톡 실시간 상담 가능.</div>
-      <span class="how-cta">문의하기 →</span>
-    </a>
-    <a class="how-card reveal" href="#support">
+    </div>
+    <div class="how-card reveal">
       <div class="how-num">02</div>
       <div class="how-title">설계·발주</div>
       <div class="how-desc">공간 측정 후 맞춤 도면 설계. 발주 후 일반 제품 기준 약 2주~최대 1개월 내 설치 완료.</div>
-      <span class="how-cta">문의하기 →</span>
-    </a>
-    <a class="how-card reveal" href="#support">
+    </div>
+    <div class="how-card reveal">
       <div class="how-num">03</div>
       <div class="how-title">설치</div>
       <div class="how-desc">자사 설치팀이 직접 현장에서 완성합니다. 레일 매설부터 마감까지 일괄 시공.</div>
-      <span class="how-cta">문의하기 →</span>
-    </a>
-    <a class="how-card reveal" href="#support">
+    </div>
+    <div class="how-card reveal">
       <div class="how-num">04</div>
       <div class="how-title">A/S · 이전</div>
       <div class="how-desc">이전·해체·재설치·변형 확장도 가능. 전국 A/S 네트워크로 빠른 대응을 보장합니다.</div>
-      <span class="how-cta">문의하기 →</span>
-    </a>
+    </div>
   </div>
 </section>
 
@@ -449,7 +446,7 @@ const slugByName = Object.fromEntries(
         제품 상담부터 A/S 신청, 카탈로그 다운로드, 대리점 개설까지 다양한 방법으로 지원합니다.
       </p>
       <div class="support-cards">
-        <a href="#contact" class="support-card js-flash">
+        <a href="#" class="support-card">
           <div class="support-icon">💬</div>
           <div>
             <div class="support-card-title">견적 및 상담 문의</div>
@@ -457,7 +454,7 @@ const slugByName = Object.fromEntries(
           </div>
           <span class="support-arrow">→</span>
         </a>
-        <a href="#contact" class="support-card js-flash">
+        <a href="#" class="support-card">
           <div class="support-icon">🔧</div>
           <div>
             <div class="support-card-title">A/S 신청</div>
@@ -465,15 +462,15 @@ const slugByName = Object.fromEntries(
           </div>
           <span class="support-arrow">→</span>
         </a>
-        <a class="support-card support-card-soon js-soon" role="button" tabindex="0" aria-disabled="true" data-soon-msg="카탈로그 페이지는 곧 공개됩니다 — HTML 보기와 PDF 다운로드로 준비 중이에요 📄">
+        <a href="#" class="support-card">
           <div class="support-icon">📄</div>
           <div>
             <div class="support-card-title">카탈로그 다운로드</div>
-            <div class="support-card-desc">HTML 보기 · PDF 다운로드 (준비중)</div>
+            <div class="support-card-desc">제품 브로셔 PDF 다운로드</div>
           </div>
-          <span class="soon-badge">준비중</span>
+          <span class="support-arrow">→</span>
         </a>
-        <a href="#contact" class="support-card js-flash">
+        <a href="#" class="support-card">
           <div class="support-icon">🏪</div>
           <div>
             <div class="support-card-title">대리점 개설 문의</div>
@@ -481,18 +478,18 @@ const slugByName = Object.fromEntries(
           </div>
           <span class="support-arrow">→</span>
         </a>
-        <a class="support-card support-card-soon js-soon" role="button" tabindex="0" aria-disabled="true" data-soon-msg="DW MALL은 현재 준비 중입니다 — 오픈까지 조금만 기다려 주세요 🛒">
+        <a href="#" class="support-card">
           <div class="support-icon">🛒</div>
           <div>
             <div class="support-card-title">DW MALL — 중량랙 온라인 구매</div>
-            <div class="support-card-desc">규격별 즉시 주문 쇼핑몰 (준비중)</div>
+            <div class="support-card-desc">규격별 즉시 주문 쇼핑몰</div>
           </div>
-          <span class="soon-badge">준비중</span>
+          <span class="support-arrow">→</span>
         </a>
       </div>
     </div>
     <div class="support-right reveal">
-      <div class="contact-card" id="contact">
+      <div class="contact-card">
         <div class="contact-title">Contact Us</div>
         <div class="contact-sub">친절한 상담사가 빠르게 답변드립니다</div>
         <div class="contact-info">
@@ -659,7 +656,7 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   background: var(--c-teal2); color: var(--c-dark);
   transition: all 0.25s; display: inline-block;
 }
-.btn-primary:hover { background: var(--c-teal); transform: translateY(-2px); }
+.btn-primary:hover { background: var(--c-lime); transform: translateY(-2px); }
 .btn-ghost {
   font-family: 'Barlow Condensed', 'NanumSquare', 'NanumSquareOTF', sans-serif;
   font-size: 14px; font-weight: 600; letter-spacing: 0.1em;
@@ -886,7 +883,6 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   text-transform: uppercase; padding: 7px 16px; border-radius: 4px;
   border: 1px solid var(--c-warm); background: transparent;
   color: var(--c-muted); cursor: pointer; transition: all 0.2s;
-  text-decoration: none; display: inline-block;
 }
 .filter-btn:hover, .filter-btn.active {
   background: var(--c-dark); color: var(--c-teal2); border-color: var(--c-dark);
@@ -896,9 +892,6 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   gap: 2px;
 }
 .product-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
   background: var(--c-white);
   position: relative; overflow: hidden;
   cursor: pointer;
@@ -1020,10 +1013,6 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   gap: 2px; margin-bottom: 80px;
 }
 .how-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
   padding: 32px 24px;
@@ -1051,19 +1040,6 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   margin-bottom: 12px;
 }
 .how-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; }
-.how-cta {
-  display: inline-block;
-  margin-top: 18px;
-  font-family: 'Barlow Condensed', 'NanumSquare', 'NanumSquareOTF', sans-serif;
-  font-size: 13px; font-weight: 600;
-  letter-spacing: 0.08em;
-  color: rgba(37,196,174,0.55);
-  transition: color 0.25s, transform 0.25s;
-}
-.how-card:hover .how-cta {
-  color: rgba(37,196,174,1);
-  transform: translateX(4px);
-}
 
 .use-cases {
   display: grid; grid-template-columns: repeat(5, 1fr);
@@ -1164,7 +1140,7 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   color: rgba(255,255,255,0.4);
 }
 .use-case.use-case-active:hover .use-case-status.status-active {
-  color: var(--c-white);
+  color: var(--c-lime);
 }
 
 /* ─── BENEFITS ─── */
@@ -1241,52 +1217,7 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
 .contact-card {
   background: var(--c-dark); border-radius: 12px;
   padding: 40px; color: var(--c-white);
-  scroll-margin-top: calc(var(--nav-h) + 20px);
 }
-/* 견적·A/S·대리점 카드 클릭 시 시선 유도 강조 */
-.contact-card.flash {
-  animation: contactFlash 1.4s var(--ease) 1;
-}
-@keyframes contactFlash {
-  0%   { box-shadow: 0 0 0 0 rgba(37,196,174,0);   transform: translateY(0); }
-  12%  { box-shadow: 0 0 0 4px rgba(37,196,174,0.55), 0 0 36px 6px rgba(37,196,174,0.45); transform: translateY(-3px); }
-  30%  { box-shadow: 0 0 0 2px rgba(37,196,174,0.25), 0 0 24px 3px rgba(37,196,174,0.2); }
-  55%  { box-shadow: 0 0 0 4px rgba(37,196,174,0.4), 0 0 30px 5px rgba(37,196,174,0.35); transform: translateY(-1px); }
-  100% { box-shadow: 0 0 0 0 rgba(37,196,174,0);   transform: translateY(0); }
-}
-/* 준비중 카드 */
-.support-card-soon { cursor: default; }
-.support-card-soon:hover {
-  border-color: rgba(0,0,0,0.06);
-  background: var(--c-white);
-  transform: none;
-}
-.support-card-soon .support-card-title,
-.support-card-soon .support-card-desc { opacity: 0.7; }
-.soon-badge {
-  margin-left: auto; flex-shrink: 0;
-  font-family: 'NanumSquare', 'NanumSquareOTF', sans-serif;
-  font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
-  color: var(--c-muted);
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.08);
-  padding: 4px 10px; border-radius: 999px;
-  white-space: nowrap;
-}
-/* 준비중 안내 토스트 */
-.soon-toast {
-  position: fixed; left: 50%; bottom: 32px;
-  transform: translateX(-50%) translateY(16px);
-  max-width: calc(100vw - 40px);
-  background: var(--c-dark); color: var(--c-white);
-  border: 1px solid rgba(37,196,174,0.45);
-  padding: 14px 22px; border-radius: 12px;
-  font-size: 14px; line-height: 1.5;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-  opacity: 0; pointer-events: none; z-index: 2000;
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
-}
-.soon-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .contact-title {
   font-family: 'Barlow Condensed', 'NanumSquare', 'NanumSquareOTF', sans-serif;
   font-size: 32px; font-weight: 800; text-transform: uppercase;
@@ -1513,9 +1444,7 @@ document.querySelectorAll('.filter-btn').forEach((btn) => {
 
 // 제품 태그 "+ 더 보기" 토글
 document.querySelectorAll('.product-tag-toggle').forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();   // 부모 카드 링크(<a>) 이동 방지
-    e.stopPropagation();
+  btn.addEventListener('click', () => {
     const tags = btn.closest('.product-tags');
     if (!tags) return;
     const isExpanded = tags.classList.toggle('expanded');
@@ -1526,43 +1455,5 @@ document.querySelectorAll('.product-tag-toggle').forEach((btn) => {
 // Stagger reveal delays (카드들을 순차적으로 등장시키기)
 document.querySelectorAll('.how-card, .benefit, .use-case, .vision-card').forEach((el, i) => {
   (el as HTMLElement).style.transitionDelay = `${i * 0.1}s`;
-});
-
-// 견적·A/S·대리점 카드 클릭 → Contact Us 상자로 시선 유도 (스크롤은 href="#contact"가 담당)
-const contactCard = document.getElementById('contact');
-document.querySelectorAll('.js-flash').forEach((el) => {
-  el.addEventListener('click', () => {
-    if (!contactCard) return;
-    contactCard.classList.remove('flash');
-    void (contactCard as HTMLElement).offsetWidth; // 리플로우 → 연속 클릭에도 애니메이션 재시작
-    contactCard.classList.add('flash');
-  });
-});
-if (contactCard) {
-  contactCard.addEventListener('animationend', () => contactCard.classList.remove('flash'));
-}
-
-// 준비중 카드(카탈로그·DW MALL) 클릭 → 안내 토스트 (맨 위로 튀지 않음)
-let soonToast: HTMLElement | null = null;
-let soonTimer = 0;
-function showSoonToast(msg: string) {
-  if (!soonToast) {
-    soonToast = document.createElement('div');
-    soonToast.className = 'soon-toast';
-    document.body.appendChild(soonToast);
-  }
-  soonToast.textContent = msg;
-  void soonToast.offsetWidth;
-  soonToast.classList.add('show');
-  window.clearTimeout(soonTimer);
-  soonTimer = window.setTimeout(() => { if (soonToast) soonToast.classList.remove('show'); }, 2800);
-}
-document.querySelectorAll('.js-soon').forEach((el) => {
-  const handler = () => showSoonToast((el as HTMLElement).dataset.soonMsg || '준비 중입니다.');
-  el.addEventListener('click', handler);
-  el.addEventListener('keydown', (e) => {
-    const ke = e as KeyboardEvent;
-    if (ke.key === 'Enter' || ke.key === ' ') { ke.preventDefault(); handler(); }
-  });
 });
 </script>

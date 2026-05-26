@@ -1,0 +1,231 @@
+---
+// 설치 사례 허브 페이지 — /installation
+// index 페이지의 #how 섹션에 있던 "설치 사례" 카테고리 입구를 이 페이지로 분리.
+// Nav/Footer는 BaseLayout이 자동 포함.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="설치 사례 — (주)대원모빌랙"
+  description="박물관·도서관·교육기관·공공기관·창고물류 등 현장별 이동식 랙 시스템 설치 사례를 카테고리별로 확인하세요."
+>
+  <section class="page-header">
+    <div class="page-header-inner">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span class="current">Installation Cases</span>
+      </div>
+      <span class="page-tag">Installation Cases</span>
+      <h1 class="page-title">설치 사례 <em>Cases</em></h1>
+      <p class="page-subtitle">현장별 시공 사례를 카테고리별로 확인하세요. 보고 싶은 카테고리를 선택하면 상세 사례와 시공 사진을 볼 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="cases-hub">
+    <div class="cases-hub-inner">
+      <div class="use-cases reveal">
+        <!-- 박물관 (활성) -->
+        <a href="/cases/museum" class="use-case use-case-active">
+          <div class="use-case-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-label="박물관">
+              <path d="M3 9l9-5 9 5"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <line x1="6" y1="10" x2="6" y2="18"/>
+              <line x1="10" y1="10" x2="10" y2="18"/>
+              <line x1="14" y1="10" x2="14" y2="18"/>
+              <line x1="18" y1="10" x2="18" y2="18"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+              <line x1="2.5" y1="21" x2="21.5" y2="21"/>
+            </svg>
+          </div>
+          <div class="use-case-name">박물관</div>
+          <span class="use-case-status status-active">사례 보기 →</span>
+        </a>
+        <!-- 도서관 (준비 중) -->
+        <div class="use-case use-case-disabled">
+          <div class="use-case-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-label="도서관">
+              <rect x="3" y="4" width="3.2" height="16" rx="0.4"/>
+              <rect x="7.4" y="6" width="3.2" height="14" rx="0.4"/>
+              <rect x="11.8" y="3" width="3.2" height="17" rx="0.4"/>
+              <path d="M17 6.2l3.6 0.9-3 13.4-3.6-0.9z"/>
+            </svg>
+          </div>
+          <div class="use-case-name">도서관</div>
+          <span class="use-case-status status-soon">준비 중</span>
+        </div>
+        <!-- 교육기관 (준비 중) -->
+        <div class="use-case use-case-disabled">
+          <div class="use-case-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-label="교육기관">
+              <path d="M2 9.5l10-4.5 10 4.5-10 4.5z"/>
+              <path d="M6 11.3v5.2c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5.2"/>
+              <line x1="22" y1="9.5" x2="22" y2="15"/>
+              <circle cx="22" cy="16" r="0.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <div class="use-case-name">교육기관</div>
+          <span class="use-case-status status-soon">준비 중</span>
+        </div>
+        <!-- 공공기관 (준비 중) -->
+        <div class="use-case use-case-disabled">
+          <div class="use-case-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-label="공공기관">
+              <line x1="12" y1="2" x2="12" y2="8"/>
+              <path d="M12 2.6l3.2 1.1-3.2 1.1"/>
+              <rect x="4.5" y="8" width="15" height="11.5" rx="0.4"/>
+              <rect x="10" y="14" width="4" height="5.5"/>
+              <line x1="7" y1="11.5" x2="9" y2="11.5"/>
+              <line x1="15" y1="11.5" x2="17" y2="11.5"/>
+              <line x1="3" y1="20.5" x2="21" y2="20.5"/>
+            </svg>
+          </div>
+          <div class="use-case-name">공공기관</div>
+          <span class="use-case-status status-soon">준비 중</span>
+        </div>
+        <!-- 창고·물류 (준비 중) -->
+        <div class="use-case use-case-disabled">
+          <div class="use-case-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-label="창고·물류">
+              <path d="M3 10.5L12 5l9 5.5V20H3z"/>
+              <line x1="3" y1="13.5" x2="21" y2="13.5"/>
+              <line x1="3" y1="16.5" x2="21" y2="16.5"/>
+              <line x1="3" y1="20" x2="21" y2="20"/>
+              <line x1="12" y1="13.5" x2="12" y2="20"/>
+            </svg>
+          </div>
+          <div class="use-case-name">창고·물류</div>
+          <span class="use-case-status status-soon">준비 중</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+.page-header {
+  background: var(--c-dark);
+  padding: calc(var(--nav-h) + 64px) 80px 56px;
+  position: relative; overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.page-header-inner { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; }
+.breadcrumb {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 10px;
+}
+.breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--c-teal2); }
+.breadcrumb .sep { color: rgba(255,255,255,0.2); }
+.breadcrumb .current { color: var(--c-teal2); }
+.page-tag {
+  font-family: 'NanumSquare', sans-serif;
+  font-size: 11px; letter-spacing: 0.2em;
+  color: var(--c-teal2); text-transform: uppercase;
+  margin-bottom: 16px; display: block;
+}
+.page-title {
+  font-family: 'Barlow Condensed', 'NanumSquare', sans-serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 800; line-height: 1.05; letter-spacing: -0.01em;
+  color: var(--c-white); margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.page-title em { color: var(--c-teal2); font-style: normal; }
+.page-subtitle {
+  font-size: 15px; line-height: 1.8;
+  color: rgba(255,255,255,0.55);
+  max-width: 640px;
+}
+
+/* ─── 사례 카테고리 허브 ─── */
+.cases-hub { background: var(--c-dark); }
+.cases-hub-inner {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 80px 100px;
+}
+.use-cases {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+}
+.use-case {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 40px 20px; text-align: center;
+  transition: all 0.25s;
+}
+.use-case:hover {
+  background: rgba(37,196,174,0.1);
+  border-color: rgba(37,196,174,0.3);
+  transform: translateY(-4px);
+}
+.use-case-icon {
+  width: 48px; height: 48px;
+  margin: 0 auto 16px;
+  color: rgba(255,255,255,0.78);
+  transition: color 0.25s, transform 0.25s;
+}
+.use-case-icon svg { width: 100%; height: 100%; display: block; }
+.use-case:hover .use-case-icon {
+  color: var(--c-teal2);
+  transform: translateY(-2px);
+}
+.use-case-name {
+  font-family: 'Barlow Condensed', 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  font-size: 18px; font-weight: 700; color: var(--c-white);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* 카드: 활성/비활성 상태 */
+.use-case.use-case-active {
+  text-decoration: none; display: block; cursor: pointer;
+}
+.use-case.use-case-active:hover {
+  background: rgba(37,196,174,0.15);
+  border-color: rgba(37,196,174,0.5);
+}
+.use-case.use-case-disabled {
+  cursor: not-allowed; opacity: 0.4;
+}
+.use-case.use-case-disabled:hover {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.06);
+  transform: none;
+}
+.use-case.use-case-disabled:hover .use-case-icon {
+  color: rgba(255,255,255,0.78); transform: none;
+}
+.use-case-status {
+  display: block;
+  font-family: 'NanumSquare', 'NanumSquareOTF', sans-serif;
+  font-size: 10px; letter-spacing: 0.12em;
+  margin-top: 10px; text-transform: uppercase;
+  transition: color 0.25s;
+}
+.use-case-status.status-active { color: var(--c-teal2); }
+.use-case-status.status-soon { color: rgba(255,255,255,0.4); }
+.use-case.use-case-active:hover .use-case-status.status-active { color: var(--c-lime); }
+
+@media (max-width: 1024px) {
+  .use-cases { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+  .page-header { padding: calc(var(--nav-h) + 40px) 24px 40px; }
+  .page-title { font-size: 32px; }
+  .page-subtitle { font-size: 14px; }
+  .cases-hub-inner { padding: 0 24px 64px; }
+  .use-cases { grid-template-columns: repeat(2, 1fr); }
+  .breadcrumb { font-size: 11px; flex-wrap: wrap; }
+}
+</style>
