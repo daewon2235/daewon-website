@@ -22,6 +22,8 @@ const { title, description = '공간에 가치를 더하는 기업 — (주)대�
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@latest/nanumsquare.css" />
+  <!-- Netlify Identity 로그인 위젯 (직원 초대 링크 처리용) -->
+  <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
   <Nav />
@@ -43,6 +45,19 @@ const { title, description = '공간에 가치를 더하는 기업 — (주)대�
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+  <!-- 로그인하면 관리자 페이지(/admin/)로 이동 -->
+  <script is:inline>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", function (user) {
+        if (!user) {
+          window.netlifyIdentity.on("login", function () {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
   </script>
 </body>
 </html>
