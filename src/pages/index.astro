@@ -51,12 +51,40 @@ const slugByName = Object.fromEntries(
   <div class="hero-right">
     <div class="hero-line"></div>
     <div class="hero-grid">
-      <div class="hero-img" data-label="박물관용 수장대 시스템">
+      <div class="hero-img" data-label="국립공주박물관 충청권역수장고" style="animation-delay:0s">
         <div class="hero-img-inner" style="background-image:url('/portfolio.jpg');"></div>
         <span class="hero-overlay-tag">박물관 수장대</span>
       </div>
-      <div class="hero-img" data-label="이동식 서가 / 모빌랙">
+      <div class="hero-img" data-label="국립세계문자박물관 아카이브실" style="animation-delay:-4s">
+        <div class="hero-img-inner" style="background-image:url('/hero-munja.jpg');"></div>
+        <span class="hero-overlay-tag">박물관 수장대</span>
+      </div>
+      <div class="hero-img" data-label="국립민속박물관 파주 3수장고" style="animation-delay:-8s">
+        <div class="hero-img-inner" style="background-image:url('/hero-paju3.jpg');"></div>
+        <span class="hero-overlay-tag">박물관 수장대</span>
+      </div>
+      <div class="hero-img" data-label="대구대표도서관 보존서고" style="animation-delay:-12s">
         <div class="hero-img-inner" style="background-image:url('/product.jpg');"></div>
+        <span class="hero-overlay-tag">서가 · 모빌랙</span>
+      </div>
+      <div class="hero-img" data-label="국립공주박물관 충청권역수장고" style="animation-delay:-16s">
+        <div class="hero-img-inner" style="background-image:url('/hero-chungcheong.jpg');"></div>
+        <span class="hero-overlay-tag">박물관 수장대</span>
+      </div>
+      <div class="hero-img" data-label="국립완주문화유산연구소" style="animation-delay:-20s">
+        <div class="hero-img-inner" style="background-image:url('/hero-wanju.jpg');"></div>
+        <span class="hero-overlay-tag">박물관 수장대</span>
+      </div>
+      <div class="hero-img" data-label="국립민속박물관 파주 7수장고" style="animation-delay:-24s">
+        <div class="hero-img-inner" style="background-image:url('/hero-paju7.jpg');"></div>
+        <span class="hero-overlay-tag">박물관 수장대</span>
+      </div>
+      <div class="hero-img" data-label="서울문화유산센터 횡성 2수장고" style="animation-delay:-28s">
+        <div class="hero-img-inner" style="background-image:url('/hero-hoengseong.jpg');"></div>
+        <span class="hero-overlay-tag">박물관 수장대</span>
+      </div>
+      <div class="hero-img" data-label="서울경찰청" style="animation-delay:-32s">
+        <div class="hero-img-inner" style="background-image:url('/hero-police.jpg');"></div>
         <span class="hero-overlay-tag">서가 · 모빌랙</span>
       </div>
     </div>
@@ -694,9 +722,8 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
 .hero-img {
   background: #2a342a;
   overflow: hidden; position: absolute; inset: 0;
-  animation: heroCross 16s ease-in-out infinite;
+  animation: heroFade 36s ease-in-out infinite;
 }
-.hero-img:nth-child(2) { animation-delay: -8s; }
 .hero-img::before {
   content: attr(data-label);
   position: absolute; bottom: 16px; left: 20px; z-index: 2;
@@ -1375,10 +1402,12 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-@keyframes heroCross {
-  0%, 44% { opacity: 1; }
-  50%, 94% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes heroFade {
+  0% { opacity: 0; }
+  3% { opacity: 1; }
+  11.11% { opacity: 1; }
+  14.11% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
 @media (max-width: 768px) {
@@ -1414,8 +1443,6 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   .hero-stat-num { font-size: 28px; }
   .hero-right { height: 62vh; min-height: 380px; order: 0; }
   .hero-grid { position: relative; height: 100%; inset: auto; display: block; gap: 0; }
-  .hero-img { position: absolute; inset: 0; animation: heroCross 16s ease-in-out infinite; }
-  .hero-img:nth-child(2) { animation-delay: -8s; }
 
   /* ── SECTION COMMON ── */
   .section { padding: 64px 24px; }
