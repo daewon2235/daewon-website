@@ -690,13 +690,13 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
 }
 .hero-grid {
   position: absolute; inset: 0;
-  display: grid; grid-template-rows: 1fr 1fr;
-  gap: 3px;
 }
 .hero-img {
   background: #2a342a;
-  overflow: hidden; position: relative;
+  overflow: hidden; position: absolute; inset: 0;
+  animation: heroCross 16s ease-in-out infinite;
 }
+.hero-img:nth-child(2) { animation-delay: -8s; }
 .hero-img::before {
   content: attr(data-label);
   position: absolute; bottom: 16px; left: 20px; z-index: 2;
