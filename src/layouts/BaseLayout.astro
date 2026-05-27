@@ -23,6 +23,28 @@ const { title, description = '공간에 가치를 더하는 기업 — (주)대�
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@latest/nanumsquare.css" />
+  {lang === 'zh' && <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />}
+  {lang === 'zh' && <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />}
+  <!-- 중국어 페이지: 간체 전용 글꼴 적용 (라틴/숫자는 Barlow, 한자는 Noto Sans SC). 한/영 페이지에는 영향 없음 -->
+  <style is:global>
+    html[lang="zh"] * {
+      font-family: 'Barlow Condensed', 'Noto Sans SC', 'NanumSquare', 'NanumSquareOTF', sans-serif !important;
+    }
+    html[lang="zh"] p,
+    html[lang="zh"] .hero-sub,
+    html[lang="zh"] .story-body,
+    html[lang="zh"] .story-quote p,
+    html[lang="zh"] .vision-desc,
+    html[lang="zh"] .product-desc,
+    html[lang="zh"] .how-desc,
+    html[lang="zh"] .history-event,
+    html[lang="zh"] .faq-a-inner,
+    html[lang="zh"] .faq-q-text {
+      letter-spacing: normal;
+      line-height: 1.9;
+      word-break: break-word;
+    }
+  </style>
   <!-- Netlify Identity 로그인 위젯 (직원 초대 링크 처리용) -->
   <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
