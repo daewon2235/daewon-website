@@ -7,12 +7,13 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  lang?: 'ko' | 'en' | 'zh';
 }
-const { title, description = '공간에 가치를 더하는 기업 — (주)대원모빌랙' } = Astro.props;
+const { title, description = '공간에 가치를 더하는 기업 — (주)대원모빌랙', lang = 'ko' } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="ko">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
