@@ -723,9 +723,14 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
 .hero-img {
   background: #2a342a;
   overflow: hidden; position: absolute; inset: 0;
-  opacity: 0; transition: opacity 1.1s ease;
+  opacity: 0; transition: opacity 1.8s ease-in-out;
 }
 .hero-img.active { opacity: 1; }
+.hero-img.active .hero-img-inner { animation: heroKenIn 8s ease-out forwards; }
+.hero-img.active:nth-child(even) .hero-img-inner { animation-name: heroKenOut; }
+@keyframes heroKenIn { from { transform: scale(1) translateX(0); } to { transform: scale(1.09) translateX(-1.5%); } }
+@keyframes heroKenOut { from { transform: scale(1.09) translateX(1.5%); } to { transform: scale(1) translateX(0); } }
+@media (prefers-reduced-motion: reduce) { .hero-img.active .hero-img-inner { animation: none; } }
 .hero-dots {
   position: absolute; bottom: 22px; left: 0; right: 0; z-index: 5;
   display: flex; justify-content: center; gap: 9px;
