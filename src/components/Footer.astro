@@ -1,31 +1,79 @@
 ---
-// 페이지 공통 푸터
+// 페이지 공통 푸터 (언어 인식형)
+const path = Astro.url.pathname;
+const lang: 'ko' | 'en' | 'zh' = path.startsWith('/en') ? 'en' : path.startsWith('/zh') ? 'zh' : 'ko';
+const base = lang === 'en' ? '/en' : lang === 'zh' ? '/zh' : '';
+const px = (h: string) => (h.startsWith('/') ? base + h : h);
+
+// 링크 주소(언어 공통). 라벨만 언어별로 바뀜.
+const hrefsCompany = ['/#story', '#', '#', '#'];
+const hrefsProducts = ['/#products', '/#products', '/#products', '#'];
+const hrefsSupport = ['/#support', '#', '#', '#', '#'];
+
+const F = {
+  ko: {
+    tagline: '공간에 가치를 더하는 기업<br>사무용·산업용·박물관용 랙 시스템 전문 제조기업',
+    hqLabel: '본사 / 공장',
+    hqAddr: '충청북도 음성군 삼성면 대덕로 63-75<br>Tel. 043) 878-7341~3 &nbsp;|&nbsp; Fax. 043) 878-7344',
+    seoulLabel: '서울 영업본부 / 박물관사업부',
+    seoulAddr: '서울특별시 광진구 자양로 58 태림빌딩 4층<br>Tel. 02) 2235-2693~4 &nbsp;|&nbsp; Fax. 02) 2235-2695',
+    emailLabel: 'Email',
+    colCompany: '회사 소개', colProducts: '제품', colSupport: '고객 지원',
+    linksCompany: ['회사 소개', '연혁 & 비전', '인증서', '찾아오시는 길'],
+    linksProducts: ['이동식 서가 / 모빌랙', '박물관용 수장대', '중량랙 / 파렛트랙', '맞춤 옵션'],
+    linksSupport: ['상담 문의', 'A/S 신청', '카탈로그 다운로드', 'DW MALL', 'FAQ'],
+    bizName: '상호명:', bizTel: '대표전화:', bizFax: '팩스:', bizReg: '사업자등록번호:',
+    companyName: '(주)대원모빌랙',
+  },
+  en: {
+    tagline: 'Adding value to every space<br>A specialist manufacturer of office, industrial and museum rack systems',
+    hqLabel: 'Headquarters / Factory',
+    hqAddr: '63-75 Daedeok-ro, Samseong-myeon, Eumseong-gun, Chungcheongbuk-do<br>Tel. +82-43-878-7341~3 &nbsp;|&nbsp; Fax. +82-43-878-7344',
+    seoulLabel: 'Seoul Sales HQ / Museum Division',
+    seoulAddr: '4F, Taerim Bldg, 58 Jayang-ro, Gwangjin-gu, Seoul<br>Tel. +82-2-2235-2693~4 &nbsp;|&nbsp; Fax. +82-2-2235-2695',
+    emailLabel: 'Email',
+    colCompany: 'Company', colProducts: 'Products', colSupport: 'Support',
+    linksCompany: ['About Us', 'History & Vision', 'Certifications', 'Directions'],
+    linksProducts: ['Mobile Shelving / Rack', 'Museum Storage Rack', 'Heavy-Duty / Pallet Rack', 'Custom Options'],
+    linksSupport: ['Contact', 'Service Request', 'Catalog Download', 'DW MALL', 'FAQ'],
+    bizName: 'Company:', bizTel: 'Tel:', bizFax: 'Fax:', bizReg: 'Business Reg. No.:',
+    companyName: 'Daewon Mobile Rack Co., Ltd.',
+  },
+  zh: {
+    tagline: '为空间增添价值的企业<br>办公·工业·博物馆用货架系统专业制造商',
+    hqLabel: '总部 / 工厂',
+    hqAddr: '忠清北道 阴城郡 三成面 大德路 63-75<br>电话 +82-43-878-7341~3 &nbsp;|&nbsp; 传真 +82-43-878-7344',
+    seoulLabel: '首尔营业总部 / 博物馆事业部',
+    seoulAddr: '首尔特别市 广津区 紫阳路 58 泰林大厦 4层<br>电话 +82-2-2235-2693~4 &nbsp;|&nbsp; 传真 +82-2-2235-2695',
+    emailLabel: 'Email',
+    colCompany: '公司介绍', colProducts: '产品', colSupport: '客户支持',
+    linksCompany: ['公司介绍', '沿革与愿景', '认证证书', '交通指南'],
+    linksProducts: ['移动书架 / 密集架', '博物馆收藏架', '重型 / 货架', '定制选项'],
+    linksSupport: ['咨询', '售后申请', '目录下载', 'DW MALL', 'FAQ'],
+    bizName: '公司名称:', bizTel: '电话:', bizFax: '传真:', bizReg: '营业执照号:',
+    companyName: '大元移动架股份有限公司',
+  },
+}[lang];
 ---
 
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
       <img src="/logo-white.png" alt="(주)대원모빌랙 로고" />
-      <p>공간에 가치를 더하는 기업<br>사무용·산업용·박물관용 랙 시스템 전문 제조기업</p>
+      <p set:html={F.tagline}></p>
 
       <div class="footer-info-block">
-        <div class="footer-info-label">본사 / 공장</div>
-        <p class="footer-info-text">
-          충청북도 음성군 삼성면 대덕로 63-75<br>
-          Tel. 043) 878-7341~3 &nbsp;|&nbsp; Fax. 043) 878-7344
-        </p>
+        <div class="footer-info-label">{F.hqLabel}</div>
+        <p class="footer-info-text" set:html={F.hqAddr}></p>
       </div>
 
       <div class="footer-info-block">
-        <div class="footer-info-label">서울 영업본부 / 박물관사업부</div>
-        <p class="footer-info-text">
-          서울특별시 광진구 자양로 58 태림빌딩 4층<br>
-          Tel. 02) 2235-2693~4 &nbsp;|&nbsp; Fax. 02) 2235-2695
-        </p>
+        <div class="footer-info-label">{F.seoulLabel}</div>
+        <p class="footer-info-text" set:html={F.seoulAddr}></p>
       </div>
 
       <div>
-        <div class="footer-info-label">Email</div>
+        <div class="footer-info-label">{F.emailLabel}</div>
         <a href="mailto:info@mobile-rack.co.kr" class="footer-email">
           info@mobile-rack.co.kr
         </a>
@@ -33,41 +81,31 @@
     </div>
 
     <div>
-      <div class="footer-col-title">회사 소개</div>
+      <div class="footer-col-title">{F.colCompany}</div>
       <ul class="footer-links">
-        <li><a href="/#story">회사 소개</a></li>
-        <li><a href="#">연혁 &amp; 비전</a></li>
-        <li><a href="#">인증서</a></li>
-        <li><a href="#">찾아오시는 길</a></li>
+        {F.linksCompany.map((label, i) => (<li><a href={px(hrefsCompany[i])}>{label}</a></li>))}
       </ul>
     </div>
     <div>
-      <div class="footer-col-title">제품</div>
+      <div class="footer-col-title">{F.colProducts}</div>
       <ul class="footer-links">
-        <li><a href="/#products">이동식 서가 / 모빌랙</a></li>
-        <li><a href="/#products">박물관용 수장대</a></li>
-        <li><a href="/#products">중량랙 / 파렛트랙</a></li>
-        <li><a href="#">맞춤 옵션</a></li>
+        {F.linksProducts.map((label, i) => (<li><a href={px(hrefsProducts[i])}>{label}</a></li>))}
       </ul>
     </div>
     <div>
-      <div class="footer-col-title">고객 지원</div>
+      <div class="footer-col-title">{F.colSupport}</div>
       <ul class="footer-links">
-        <li><a href="/#support">상담 문의</a></li>
-        <li><a href="#">A/S 신청</a></li>
-        <li><a href="#">카탈로그 다운로드</a></li>
-        <li><a href="#">DW MALL</a></li>
-        <li><a href="#">FAQ</a></li>
+        {F.linksSupport.map((label, i) => (<li><a href={px(hrefsSupport[i])}>{label}</a></li>))}
       </ul>
     </div>
   </div>
 
   <div class="footer-business">
     <p>
-      <span>상호명:</span> (주)대원모빌랙 &nbsp;|&nbsp;
-      <span>대표전화:</span> 02) 2235-2693~4 &nbsp;|&nbsp;
-      <span>팩스:</span> 02) 2235-2695 &nbsp;|&nbsp;
-      <span>사업자등록번호:</span> 126-81-68669
+      <span>{F.bizName}</span> {F.companyName} &nbsp;|&nbsp;
+      <span>{F.bizTel}</span> 02) 2235-2693~4 &nbsp;|&nbsp;
+      <span>{F.bizFax}</span> 02) 2235-2695 &nbsp;|&nbsp;
+      <span>{F.bizReg}</span> 126-81-68669
     </p>
   </div>
 
