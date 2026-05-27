@@ -726,11 +726,9 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   opacity: 0; transition: opacity 1.8s ease-in-out;
 }
 .hero-img.active { opacity: 1; }
-.hero-img.active .hero-img-inner { animation: heroKenIn 8s ease-out forwards; }
-.hero-img.active:nth-child(even) .hero-img-inner { animation-name: heroKenOut; }
-@keyframes heroKenIn { from { transform: scale(1) translateX(0); } to { transform: scale(1.09) translateX(-1.5%); } }
-@keyframes heroKenOut { from { transform: scale(1.09) translateX(1.5%); } to { transform: scale(1) translateX(0); } }
-@media (prefers-reduced-motion: reduce) { .hero-img.active .hero-img-inner { animation: none; } }
+.hero-img:nth-child(even) .hero-img-inner { animation-direction: alternate-reverse; }
+@keyframes heroKen { from { transform: scale(1) translateX(0); } to { transform: scale(1.09) translateX(-1.5%); } }
+@media (prefers-reduced-motion: reduce) { .hero-img-inner { animation: none; } }
 .hero-dots {
   position: absolute; bottom: 22px; left: 0; right: 0; z-index: 5;
   display: flex; justify-content: center; gap: 9px;
@@ -759,6 +757,7 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   background: linear-gradient(135deg, #263326 0%, #1e2e1e 50%, #162316 100%);
   background-size: cover; background-position: center;
   transition: transform 6s ease;
+  animation: heroKen 16s ease-in-out infinite alternate;
 }
 .hero-img:hover .hero-img-inner { transform: scale(1.04); }
 .hero-overlay-tag {
