@@ -749,6 +749,7 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   font-size: 80px; font-weight: 800;
   color: rgba(255,255,255,0.36); line-height: 1;
   letter-spacing: 0.02em;
+  text-align: center;
   text-shadow: 0 2px 18px rgba(0,0,0,0.5);
   user-select: none;
   transition: color 0.45s var(--ease), text-shadow 0.45s var(--ease);
@@ -1243,6 +1244,9 @@ html { scroll-padding-top: var(--nav-h); scroll-behavior: smooth; }
   .hero-stat-num { font-size: 28px; }
   .hero-right { height: 62vh; min-height: 380px; order: 0; }
   .hero-grid { position: relative; height: 100%; inset: auto; display: block; gap: 0; }
+  /* 모바일: 점과 사진 라벨이 같은 높이에서 겹치지 않게 점을 위로 올림 + 라벨 폭 제한 */
+  .hero-dots { bottom: 60px; }
+  .hero-img::before { max-width: calc(100% - 40px); }
 
   /* ── SECTION COMMON ── */
   .section { padding: 64px 24px; }
