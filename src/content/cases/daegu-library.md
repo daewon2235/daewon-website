@@ -21,15 +21,15 @@ features:
     description: "레일이 꼭 필요한 모빌랙의 특성상, 레일과 레일 사이를 카펫타일로 깔끔하게 마감하여 발소리도 들리지 않고, 카트도 다닐
       수 있는 편리하고 쾌적한 서고가 완성되었습니다. "
 gallery:
-  - image: /images/대구도서관-조감도.png
-    label: daegu library 3d
-    caption: 대구대표도서관 3D 조감도
   - image: /images/10.jpg
     label: book storage 1
     caption: 보존서고 내부의 전경
   - image: /images/04.jpg
     label: rails
     caption: 평탄한 레일 사이의 공간, 더욱 편리한 서고 운용
+  - image: /images/대구도서관-조감도.png
+    label: daegu library 3d
+    caption: 대구대표도서관 3D 조감도
   - image: /images/02.jpg
     label: storage 2
     caption: 곧 지식으로 채워질 보존서고의 서가들
