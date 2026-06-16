@@ -1,6 +1,6 @@
 ---
 url_id: museum-storage-system
-name: 전문 수장대 시스템
+name: "이층형 이동식 수장대 시스템 "
 name_en: Storage-rack System
 subtitle: 유물의 재질·환경에 맞춘 최적의 안식처 — 국가유산 영구보존 전문 수장 시스템
 families:
