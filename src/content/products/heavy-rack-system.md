@@ -1,6 +1,6 @@
 ---
 url_id: heavy-rack-system
-name: 중량랙 & 파렛트랙 시스템
+name: 고하중 파렛트랙 시스템
 name_en: Weight-rack System
 subtitle: 선반당 200kg부터 1톤 이상까지 — 산업·물류 환경을 위한 고하중 보관 솔루션
 families:
